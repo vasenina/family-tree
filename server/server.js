@@ -44,14 +44,54 @@ app.get("/user-cookie/id.json", function (req, res) {
     });
 });
 
+function generateFamily(family, relations) {
+    console.log("relations", relations);
+    let newFamily = family.map((member) => {
+        let newMember = {};
+        const id = member.id;
+        console.log("id", id);
+        const relationForThisId = relations.filter((relation) => {
+            console.log("rel in filter", relation);
+            if (relation.member1_id === id || relation.member2_id === id) {
+                return relation;
+            }
+        });
+        console.log("filtered relations", relationForThisId);
+        for (let i = 0; i < relationForThisId.length; i++) {
+            if (relationForThisId[i].type === "spouse") {
+                const relative_id =
+                    relationForThisId[i].member1_id === id
+                        ? relationForThisId[i].member2_id
+                        : relationForThisId[i].member1_id;
+                if (newMember.spouse) {
+                    newMember.spouse.push(relative_id);
+                } else {
+                    newMember.spouse = [relative_id];
+                }
+            }
+            //parents, child, other, sibling
+        }
+
+        newMember = { ...newMember, ...member };
+        return newMember;
+    });
+    return newFamily;
+}
+
 app.get("/family", async (req, res) => {
     console.log("User want to see all family");
     try {
+        const family = db.getAll();
+        const relations = db.getAllRelations();
+        Promise.all([family, relations]).then((values) => {
+            const newFamily = generateFamily(values[0].rows, values[1].rows);
+            res.send({ success: true, newFamily });
+            return;
+        });
     } catch (err) {
         console.log("error im GET family", err);
+        res.status(500).send({ success: false });
     }
-    const family = db.getAll();
-    res.send({ success: true });
 });
 
 app.get("*", function (req, res) {

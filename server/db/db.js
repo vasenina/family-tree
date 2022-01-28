@@ -30,3 +30,10 @@ module.exports.getAll = () => {
     const params = [];
     return db.query(q, params);
 };
+module.exports.getAllRelations = () => {
+    console.log("DB: user wants to see all");
+    const q = `SELECT member1_id, member2_id, type
+                FROM relations;`;
+    const params = [];
+    return db.query(q, params);
+};
