@@ -67,6 +67,7 @@ body {
     width: 100px;
 }
 .big-btn:hover {
-    border-color: var(--green-color);
+    background-color: var(--green-color);
     cursor: pointer;
+    color: white;
 }

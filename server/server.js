@@ -2,9 +2,11 @@ const express = require("express");
 const app = express();
 const compression = require("compression");
 const path = require("path");
-// const db = require("./db");
+const db = require("./db/db");
 // const { hash, compare } = require("./bc");
 const cookieSession = require("cookie-session");
+
+const { member } = require("./routers/member.js");
 
 app.use(compression());
 
@@ -22,6 +24,8 @@ app.use(
 );
 
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
+
+app.use(member);
 
 app.get("/clear", (req, res) => {
     req.session = null;
