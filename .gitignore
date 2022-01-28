@@ -5,3 +5,4 @@ client/public/bundle.js
 client/public/bundle.js.LICENSE.txt
 bundle.css
 server/passwords.json
+server/db/startDbValues.sql

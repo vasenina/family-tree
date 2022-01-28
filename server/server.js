@@ -24,6 +24,7 @@ app.use(
 );
 
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
+app.use(express.json());
 
 app.use(member);
 
@@ -41,6 +42,16 @@ app.get("/user-cookie/id.json", function (req, res) {
         //last: req.session.last,
         // first: req.session.first,
     });
+});
+
+app.get("/family", async (req, res) => {
+    console.log("User want to see all family");
+    try {
+    } catch (err) {
+        console.log("error im GET family", err);
+    }
+    const family = db.getAll();
+    res.send({ success: true });
 });
 
 app.get("*", function (req, res) {

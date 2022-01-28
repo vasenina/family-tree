@@ -26,7 +26,7 @@ CREATE TABLE relations(
       type VARCHAR(255) NOT NULL, 
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
--- type: parent, child, brother, other, married
+-- type: parent, child, sibling, other, married
 
 CREATE TABLE wall_messages(
       id SERIAL PRIMARY KEY,
@@ -52,7 +52,9 @@ CREATE TABLE wall_messages(
 
 
 
-
+-- `UPDATE members
+--                 SET first = $2, last  = $3, email = $4
+--                 WHERE id = $1;`;
 
 
 

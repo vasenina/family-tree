@@ -12,10 +12,21 @@ const db = spicedPg(
 console.log(`[db] connecting to ${database}`);
 
 module.exports.addMember = (member) => {
-    console.log("DB: I'm adding a new member");
-    // const q = `INSERT INTO users (first, last, email, password)
-    //             VALUES ($1, $2, $3, $4)
-    //             RETURNING id;`;
-    // const params = [userFirst, userLast, userEmail, userPW];
+    console.log("DB: I'm adding a new member", member);
+    const first = member.first ? member.first : null;
+    const last = member.last ? member.last : null;
+    const image_url = member.image_url ? member.image_url : null;
+    const q = `INSERT INTO members (first, last, image_url)
+                 VALUES ($1, $2, $3)
+                 RETURNING id;`;
+    const params = [first, last, image_url];
+    return db.query(q, params);
+};
+
+module.exports.getAll = () => {
+    console.log("DB: user wants to see all");
+    const q = `SELECT id, first, last, image_url
+                FROM members;`;
+    const params = [];
     return db.query(q, params);
 };

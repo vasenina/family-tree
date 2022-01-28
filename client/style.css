@@ -71,3 +71,51 @@ body {
     cursor: pointer;
     color: white;
 }
+
+/* ui input */
+
+.input_group {
+    padding: 16px 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input_field {
+    font-family: inherit;
+    width: 200px;
+    border: 3px solid var(--dark-color);
+    outline: 0;
+    font-size: 16px;
+    color: var(--dark-color);
+    padding: var(--offset) var(--offset);
+    background: white;
+    transition: border-color 0.2s;
+}
+
+.input_label {
+    font-size: 16px;
+    cursor: text;
+
+    display: block;
+
+    color: var(--dark-color);
+}
+
+.input_field:focus {
+    border-color: var(--green-color);
+}
+
+.img_profile_small {
+    width: 50px;
+    height: 50px;
+    border: 3px solid var(--dark-color);
+    object-fit: cover;
+}
+
+.img_profile_big {
+    width: 150px;
+    height: 150px;
+    border: 3px solid var(--green-color);
+    object-fit: cover;
+}
