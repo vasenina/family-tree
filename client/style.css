@@ -1,3 +1,72 @@
+:root {
+    --dark-color: black;
+    --yellow-color: #ffd200;
+    --rose-color: #ec8298;
+    --green-color: #00ffc2;
+    --bordo-color: #7d4c6d;
+    --blue-color: #55b6af;
+    --light-blue-color: #b5e8e5;
+    --offset: 8px;
+    --offset-2: 16px;
+    --offset-3: 24px;
+    --offset-4: 32px;
+}
+
+* {
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+        "Lucida Sans", Arial, sans-serif;
+    color: var(--dark-color);
+}
+
 body {
     background-color: ghostwhite;
+}
+/* ----loyaut---- */
+
+/* ----header---- */
+.header {
+    height: 80px;
+    background-color: var(--yellow-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 24px 8px;
+    border-bottom: 1px solid var(--dark-color);
+    position: sticky;
+}
+
+.logo h1 {
+    color: black;
+    font-size: 48px;
+}
+
+.icon-btn {
+    height: 32px;
+    width: 32px;
+    object-fit: cover;
+    fill: var(--dark-color);
+    margin-left: var(--offset);
+    display: inline;
+}
+.icon-btn:hover {
+    cursor: pointer;
+}
+
+/* ---main-family-screen --- */
+
+.main-family-screen {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.big-btn {
+    background-color: var(--yellow-color);
+    height: 100px;
+    width: 100px;
+}
+.big-btn:hover {
+    border-color: var(--green-color);
+    cursor: pointer;
 }
