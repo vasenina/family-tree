@@ -4,13 +4,26 @@ import Header from "./header";
 import { useEffect, useState } from "react";
 import Family from "./allFamily";
 import AddMember from "./member-page/addMember";
+import ViewMember from "./member-page/viewMember";
+import { useDispatch, useSelector } from "react-redux";
+import { receiveFamily } from "./redux/familyTree/slice.js";
 
 export default function App() {
+    const dispatch = useDispatch();
+
+    // const family = useSelector((state) => {
+    //     return state.familyTree;
+    // });
+    // console.log(family);
+
     useEffect(() => {
         fetch("/family")
             .then((res) => res.json())
             .then((data) => {
                 console.log(data);
+                if (data.success) {
+                    dispatch(receiveFamily(data.family));
+                }
             })
             .catch((err) => {
                 console.log("error in fetch", err);
@@ -27,6 +40,9 @@ export default function App() {
 
                     <Route path="/add-member">
                         <AddMember />
+                    </Route>
+                    <Route path="/member/:id">
+                        <ViewMember />
                     </Route>
                 </BrowserRouter>
             </div>

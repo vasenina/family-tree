@@ -49,14 +49,13 @@ function generateFamily(family, relations) {
     let newFamily = family.map((member) => {
         let newMember = {};
         const id = member.id;
-        console.log("id", id);
+
         const relationForThisId = relations.filter((relation) => {
-            console.log("rel in filter", relation);
             if (relation.member1_id === id || relation.member2_id === id) {
                 return relation;
             }
         });
-        console.log("filtered relations", relationForThisId);
+
         for (let i = 0; i < relationForThisId.length; i++) {
             if (relationForThisId[i].type === "spouse") {
                 const relative_id =
@@ -72,7 +71,7 @@ function generateFamily(family, relations) {
             //parents, child, other, sibling
         }
 
-        newMember = { ...newMember, ...member };
+        newMember = { ...member, ...newMember };
         return newMember;
     });
     return newFamily;
@@ -85,12 +84,13 @@ app.get("/family", async (req, res) => {
         const relations = db.getAllRelations();
         Promise.all([family, relations]).then((values) => {
             const newFamily = generateFamily(values[0].rows, values[1].rows);
-            res.send({ success: true, newFamily });
+            res.send({ success: true, family: newFamily });
             return;
         });
     } catch (err) {
         console.log("error im GET family", err);
         res.status(500).send({ success: false });
+        return;
     }
 });
 
