@@ -26,6 +26,7 @@ export default function Family({}) {
                                 first={member.first}
                                 last={member.last}
                                 imageUrl={member.image_url}
+                                css="img_profile_big"
                                 action={() => {
                                     location.assign(`/member/${member.id}`);
                                 }}

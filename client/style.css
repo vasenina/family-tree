@@ -115,10 +115,12 @@ body {
 .img_profile_small {
     width: 50px;
     height: 50px;
-    border: 3px solid var(--dark-color);
+
     object-fit: cover;
 }
-
+.img_profile_small:hover {
+    cursor: pointer;
+}
 .img_profile_big {
     width: 100px;
     height: 100px;
@@ -130,4 +132,20 @@ body {
 .img_profile_big:hover {
     /* border: 3px solid var(--green-color); */
     filter: grayscale(0%);
+    cursor: pointer;
+}
+/* member-view */
+
+.member-view-container {
+    background-color: var(--yellow-color);
+    display: flex;
+    height: 100%;
+}
+.bio-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.relatives-list {
+    display: flex;
 }

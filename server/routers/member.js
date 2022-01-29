@@ -71,4 +71,17 @@ member.post(
     }
 );
 
+member.get("/api/member/:id", async (req, res) => {
+    console.log("Get member info", req.params.id);
+    try {
+        const member = await db.getMemberInfoById(req.params.id);
+        res.json({ success: true, member: member.rows[0] });
+        return;
+    } catch (err) {
+        console.log("error in get member by id", err);
+        res.status(500).json({ success: false });
+        return;
+    }
+});
+
 module.exports.member = member;

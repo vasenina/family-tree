@@ -1,4 +1,11 @@
-export default function MemberPic({ first, last, imageUrl, action, size }) {
+export default function MemberPic({
+    first,
+    last,
+    imageUrl,
+    action,
+    size,
+    css,
+}) {
     const picUrl = imageUrl || "/default-member.png";
     const imgClass =
         size == "small"
@@ -9,7 +16,7 @@ export default function MemberPic({ first, last, imageUrl, action, size }) {
             <img
                 src={picUrl}
                 alt={`${first} ${last}`}
-                className={imgClass}
+                className={css}
                 onClick={action}
             />
         </>

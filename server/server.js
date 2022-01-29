@@ -57,15 +57,55 @@ function generateFamily(family, relations) {
         });
 
         for (let i = 0; i < relationForThisId.length; i++) {
+            const relative_id =
+                relationForThisId[i].member1_id === id
+                    ? relationForThisId[i].member2_id
+                    : relationForThisId[i].member1_id;
             if (relationForThisId[i].type === "spouse") {
-                const relative_id =
-                    relationForThisId[i].member1_id === id
-                        ? relationForThisId[i].member2_id
-                        : relationForThisId[i].member1_id;
                 if (newMember.spouse) {
                     newMember.spouse.push(relative_id);
                 } else {
                     newMember.spouse = [relative_id];
+                }
+            } else if (relationForThisId[i].type === "sibling") {
+                if (newMember.sibling) {
+                    newMember.sibling.push(relative_id);
+                } else {
+                    newMember.sibling = [relative_id];
+                }
+            } else if (relationForThisId[i].type === "other") {
+                if (newMember.other) {
+                    newMember.other.push(relative_id);
+                } else {
+                    newMember.other = [relative_id];
+                }
+            } else if (relationForThisId[i].type === "parent") {
+                if (relationForThisId[i].member1_id === id) {
+                    if (newMember.child) {
+                        newMember.child.push(relative_id);
+                    } else {
+                        newMember.child = [relative_id];
+                    }
+                } else {
+                    if (newMember.parent) {
+                        newMember.parent.push(relative_id);
+                    } else {
+                        newMember.parent = [relative_id];
+                    }
+                }
+            } else if (relationForThisId[i].type === "child") {
+                if (relationForThisId[i].member1_id === id) {
+                    if (newMember.parent) {
+                        newMember.parent.push(relative_id);
+                    } else {
+                        newMember.parent = [relative_id];
+                    }
+                } else {
+                    if (newMember.child) {
+                        newMember.child.push(relative_id);
+                    } else {
+                        newMember.child = [relative_id];
+                    }
                 }
             }
             //parents, child, other, sibling
