@@ -84,4 +84,33 @@ member.get("/api/member/:id", async (req, res) => {
     }
 });
 
+member.post(
+    "/api/upload-photo/:id",
+    uploader.single("file"),
+    s3.upload,
+    async (req, res) => {
+        const id = req.params.id;
+        console.log("user wants to add a photo photo");
+        if (!req.file) {
+            res.json({ success: false });
+            return;
+        } else {
+            const url = s3.getLink(req.file.filename);
+            console.log(req.body);
+            //let newMember = { ...req.body, image_url: url };
+            //console.log("new member with photo", newMember);
+            try {
+                await db.changeMemberPhoto(id, url);
+                // newMember.id = member_id;
+                res.json({ success: true, url: url });
+                return;
+            } catch (err) {
+                console.log("error in upload member photo", err);
+                res.status(500).json({ success: false });
+                return;
+            }
+        }
+    }
+);
+
 module.exports.member = member;

@@ -2,6 +2,22 @@ export default function familyTreeReducer(familyTree = [], action) {
     if (action.type == "family-tree/receivedTree") {
         familyTree = action.payload.tree;
     }
+
+    if (action.type == "family-tree/changePhoto") {
+        console.log(action.playload);
+        const newFamilyTree = familyTree.map((member) => {
+            if (member.id === action.playload.data.id) {
+                const newMember = {
+                    ...member,
+                    image_url: action.playload.data.url,
+                };
+                return newMember;
+            }
+            return member;
+        });
+        return newFamilyTree;
+    }
+
     // if (action.type === "friends-and-fans/accept") {
     //     const newFriendsAndFans = friendsAndFans.map((friend) => {
     //         if (friend.id == action.playload.id) {
@@ -35,6 +51,13 @@ export function receiveFamily(tree) {
 //         playload: { id },
 //     };
 // }
+
+export function changePhotoById(data) {
+    return {
+        type: "family-tree/changePhoto",
+        playload: { data },
+    };
+}
 
 // export function endFriendship(id) {
 //     return {

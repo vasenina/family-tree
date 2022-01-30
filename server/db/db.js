@@ -46,3 +46,11 @@ module.exports.getMemberInfoById = (id) => {
     const params = [id];
     return db.query(q, params);
 };
+
+module.exports.changeMemberPhoto = (id, url) => {
+    console.log("adding new photo");
+    const q = `UPDATE members SET image_url = $2
+    WHERE id = $1`;
+    const params = [id, url];
+    return db.query(q, params);
+};

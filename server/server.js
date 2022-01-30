@@ -45,7 +45,7 @@ app.get("/user-cookie/id.json", function (req, res) {
 });
 
 function generateFamily(family, relations) {
-    console.log("relations", relations);
+    //console.log("relations", relations);
     let newFamily = family.map((member) => {
         let newMember = {};
         const id = member.id;
