@@ -21,12 +21,15 @@ CREATE TABLE members(
 
 CREATE TABLE relations(
       id SERIAL PRIMARY KEY,
-      member1_id INT REFERENCES members(id) NOT NULL,
-      member2_id INT REFERENCES members(id) NOT NULL, 
+      member_id INT REFERENCES members(id) NOT NULL,
+      relative_id INT REFERENCES members(id) NOT NULL, 
       type VARCHAR(255) NOT NULL, 
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
 -- type: parent, child, sibling, other, spouse
+
+
+
 
 CREATE TABLE wall_messages(
       id SERIAL PRIMARY KEY,

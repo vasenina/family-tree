@@ -3,12 +3,15 @@ import { useState, useEffect } from "react";
 
 import MemberRelatives from "./memberRelatives";
 import PhotoUploader from "../ui/photoUploader";
+import AddRelations from "./addRelations";
 
 export default function viewMember({}) {
     const { id } = useParams();
     const [member, setMember] = useState();
     const [error, setError] = useState();
     const [photoUploaderToggler, setPhotoUploaderToggler] = useState(false);
+    const [addRelativesIsVisible, setAddRelativesIsVisible] = useState(false);
+    const [relationType, setRelationType] = useState();
 
     useEffect(() => {
         //get all info about user from db
@@ -33,7 +36,14 @@ export default function viewMember({}) {
         setPhotoUploaderToggler(toggle);
     };
 
-    // const toggl
+    const addRelativesToggler = (type) => {
+        setRelationType(type);
+        console.log("inside viewMembers", type);
+        setAddRelativesIsVisible(!addRelativesIsVisible);
+    };
+
+    console.log("state", relationType);
+    // const togg
 
     return (
         <>
@@ -63,9 +73,19 @@ export default function viewMember({}) {
                         <h1>
                             {member.first} {member.last}
                         </h1>
-                        <MemberRelatives id={member.id} />
+                        <MemberRelatives
+                            id={member.id}
+                            addRelations={addRelativesToggler}
+                        />
                     </div>
                 </div>
+            )}
+            {addRelativesIsVisible && (
+                <AddRelations
+                    id={member.id}
+                    close={addRelativesToggler}
+                    type={relationType}
+                />
             )}
         </>
     );

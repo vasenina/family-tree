@@ -3,10 +3,12 @@ import { useSelector } from "react-redux";
 
 import MemberPic from "../ui/memberPic";
 
-export default function MemberRelatives({ id }) {
+export default function MemberRelatives({ id, addRelations }) {
     const currentMember = useSelector((state) => {
         return state.familyTree?.find((member) => member.id === id);
     });
+
+    // console.log("from MemberRelatives", currentMember);
 
     const parents = useSelector((state) => {
         return state.familyTree?.filter(
@@ -38,10 +40,21 @@ export default function MemberRelatives({ id }) {
     });
 
     const returnRelativesList = (relatives, type) => {
+        // console.log("return List", type);
         if (relatives.length <= 0) {
-            return <></>;
+            return (
+                <div className="relatives-list ">
+                    {type}{" "}
+                    <button
+                        className="btn-primary add-btn"
+                        onClick={() => {
+                            console.log("here is a type", type);
+                            addRelations(type);
+                        }}
+                    ></button>
+                </div>
+            );
         } else {
-            console.log("hee");
             return (
                 <div className="relatives-list ">
                     {type}
@@ -58,6 +71,13 @@ export default function MemberRelatives({ id }) {
                             </div>
                         );
                     })}
+                    <button
+                        className="btn-primary add-btn"
+                        onClick={() => {
+                            console.log("here is a type", { type });
+                            addRelations(type);
+                        }}
+                    ></button>
                 </div>
             );
         }
@@ -65,8 +85,8 @@ export default function MemberRelatives({ id }) {
     return (
         <>
             relatives
-            {returnRelativesList(parents, "parents")}
-            {returnRelativesList(siblings, "siblings")}
+            {returnRelativesList(parents, "parent")}
+            {returnRelativesList(siblings, "sibling")}
             {returnRelativesList(children, "children")}
             {returnRelativesList(spouse, "spouse")}
             {returnRelativesList(other, "other")}

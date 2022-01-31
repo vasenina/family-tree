@@ -51,16 +51,16 @@ function generateFamily(family, relations) {
         const id = member.id;
 
         const relationForThisId = relations.filter((relation) => {
-            if (relation.member1_id === id || relation.member2_id === id) {
+            if (relation.member_id === id || relation.relative_id === id) {
                 return relation;
             }
         });
 
         for (let i = 0; i < relationForThisId.length; i++) {
             const relative_id =
-                relationForThisId[i].member1_id === id
-                    ? relationForThisId[i].member2_id
-                    : relationForThisId[i].member1_id;
+                relationForThisId[i].member_id === id
+                    ? relationForThisId[i].relative_id
+                    : relationForThisId[i].member_id;
             if (relationForThisId[i].type === "spouse") {
                 if (newMember.spouse) {
                     newMember.spouse.push(relative_id);
@@ -80,7 +80,7 @@ function generateFamily(family, relations) {
                     newMember.other = [relative_id];
                 }
             } else if (relationForThisId[i].type === "parent") {
-                if (relationForThisId[i].member1_id === id) {
+                if (relationForThisId[i].member_id === id) {
                     if (newMember.child) {
                         newMember.child.push(relative_id);
                     } else {
@@ -94,7 +94,7 @@ function generateFamily(family, relations) {
                     }
                 }
             } else if (relationForThisId[i].type === "child") {
-                if (relationForThisId[i].member1_id === id) {
+                if (relationForThisId[i].member_id === id) {
                     if (newMember.parent) {
                         newMember.parent.push(relative_id);
                     } else {

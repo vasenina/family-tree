@@ -32,7 +32,7 @@ module.exports.getAll = () => {
 };
 module.exports.getAllRelations = () => {
     console.log("DB: user wants to see all");
-    const q = `SELECT member1_id, member2_id, type
+    const q = `SELECT member_id, relative_id, type
                 FROM relations;`;
     const params = [];
     return db.query(q, params);
