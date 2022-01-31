@@ -54,3 +54,11 @@ module.exports.changeMemberPhoto = (id, url) => {
     const params = [id, url];
     return db.query(q, params);
 };
+
+module.exports.addRelation = (member_id, relative_id, type) => {
+    console.log("adding new relation");
+    const q = `INSERT INTO relations (member_id, relative_id, type) 
+    VALUES  ($1, $2, $3)`;
+    const params = [member_id, relative_id, type];
+    return db.query(q, params);
+};

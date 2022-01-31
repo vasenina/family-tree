@@ -37,8 +37,14 @@ export default function viewMember({}) {
     };
 
     const addRelativesToggler = (type) => {
-        setRelationType(type);
-        console.log("inside viewMembers", type);
+        let relationType = type;
+        if (type == "parent") {
+            relationType = "child";
+        } else if (type == "parent") {
+            relationType = "parent";
+        }
+        setRelationType(relationType);
+        console.log("inside viewMembers", relationType);
         setAddRelativesIsVisible(!addRelativesIsVisible);
     };
 

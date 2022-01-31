@@ -113,4 +113,16 @@ member.post(
     }
 );
 
+member.post("/api/add-relation", async (req, res) => {
+    console.log("user wants to add relation", req.body);
+    const { member_id, relative_id, type } = req.body;
+    try {
+        await db.addRelation(member_id, relative_id, type);
+        res.json({ success: true });
+    } catch (err) {
+        console.log(err);
+        res.json({ success: false });
+    }
+});
+
 module.exports.member = member;

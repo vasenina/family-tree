@@ -1,5 +1,7 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
+
+import { addRelation } from "../redux/familyTree/slice.js";
 
 import MemberPic from "../ui/memberPic";
 
@@ -8,6 +10,7 @@ export default function AddRelations({ id, close, type }) {
     //     return state.familyTree?.find((member) => member.id === id);
     // });
     // console.log(currentMember);
+    const dispatch = useDispatch();
 
     const currentMemberRelations = useSelector((state) => {
         const member = state.familyTree?.find((member) => member.id === id);
@@ -55,17 +58,26 @@ export default function AddRelations({ id, close, type }) {
             type: type,
         };
         console.log("newRelation", newRelation);
-        // fetch()
-        //     .then((res) => res.json())
-        //     .then((data) => {
-        //         console.log("add Relations: data from server", data);
-        //         if (data.success) {
-        //             //dispatch hete
-        //         }
-        //     })
-        //     .catch((err) => {
-        //         console.log("error", err);
-        //     });
+        fetch("/api/add-relation", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newRelation),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log("add Relations: data from server", data);
+                if (data.success) {
+                    //dispatch hete
+                    //  dispatch(addRelation(newRelation));
+                    //  dispatch(addRelation("dsaf"));
+                }
+            })
+            .catch((err) => {
+                console.log("error", err);
+            });
+
         close("");
     };
 

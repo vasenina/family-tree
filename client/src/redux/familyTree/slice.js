@@ -18,6 +18,12 @@ export default function familyTreeReducer(familyTree = [], action) {
         return newFamilyTree;
     }
 
+    if (action.type == "family-tree/addRelation") {
+        console.log("from slice", action.playload.relation);
+        const newFamilyTree = familyTree;
+        return newFamilyTree;
+    }
+
     // if (action.type === "friends-and-fans/accept") {
     //     const newFriendsAndFans = friendsAndFans.map((friend) => {
     //         if (friend.id == action.playload.id) {
@@ -56,6 +62,13 @@ export function changePhotoById(data) {
     return {
         type: "family-tree/changePhoto",
         playload: { data },
+    };
+}
+
+export function addRelation(relation) {
+    return {
+        type: "family-tree/addRelation",
+        playload: { relation },
     };
 }
 
