@@ -87,7 +87,7 @@ export default function MemberRelatives({ id, addRelations }) {
             relatives
             {returnRelativesList(parents, "parent")}
             {returnRelativesList(siblings, "sibling")}
-            {returnRelativesList(children, "children")}
+            {returnRelativesList(children, "child")}
             {returnRelativesList(spouse, "spouse")}
             {returnRelativesList(other, "other")}
         </>

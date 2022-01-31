@@ -40,7 +40,7 @@ export default function viewMember({}) {
         let relationType = type;
         if (type == "parent") {
             relationType = "child";
-        } else if (type == "parent") {
+        } else if (type == "child") {
             relationType = "parent";
         }
         setRelationType(relationType);

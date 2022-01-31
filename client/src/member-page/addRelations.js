@@ -71,7 +71,10 @@ export default function AddRelations({ id, close, type }) {
                 if (data.success) {
                     //dispatch hete
                     //  dispatch(addRelation(newRelation));
-                    //  dispatch(addRelation("dsaf"));
+                    dispatch({
+                        type: `family-tree/addRelation-${newRelation.type}`,
+                        playload: newRelation,
+                    });
                 }
             })
             .catch((err) => {
