@@ -124,12 +124,25 @@ app.get("/family", async (req, res) => {
         const relations = db.getAllRelations();
         Promise.all([family, relations]).then((values) => {
             const newFamily = generateFamily(values[0].rows, values[1].rows);
-            res.send({ success: true, family: newFamily });
+            res.json({ success: true, family: newFamily });
             return;
         });
     } catch (err) {
         console.log("error im GET family", err);
-        res.status(500).send({ success: false });
+        res.status(500).json({ success: false });
+        return;
+    }
+});
+
+app.get("/api/relations", async (req, res) => {
+    console.log("user wants to get relations");
+    try {
+        const relations = await db.getAllRelations();
+        res.json({ success: true, relations: relations.rows });
+        return;
+    } catch (err) {
+        console.log("Error in get relations", err);
+        res.status(500).json({ success: false });
         return;
     }
 });
