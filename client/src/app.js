@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Family from "./allFamily";
 import AddMember from "./member-page/addMember";
 import ViewMember from "./member-page/viewMember";
+import FamilyTree from "./familyTree";
 import { useDispatch, useSelector } from "react-redux";
 import { receiveFamily } from "./redux/familyTree/slice.js";
 
@@ -43,6 +44,9 @@ export default function App() {
                     </Route>
                     <Route path="/member/:id">
                         <ViewMember />
+                    </Route>
+                    <Route path="/tree">
+                        <FamilyTree />
                     </Route>
                 </BrowserRouter>
             </div>
