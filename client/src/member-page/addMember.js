@@ -81,34 +81,64 @@ export default function AddMember({}) {
 
     return (
         <div>
-            Add Member
-            <form>
-                <MemberPic size="big" />
-                <input
-                    className="input-file"
-                    type="file"
-                    accept="image/*"
-                    onChange={getPhoto}
-                />
-                <InputField
-                    label="last"
-                    name="last"
-                    type="text"
-                    onChange={handleChange}
-                />
-                <InputField
-                    label="first"
-                    name="first"
-                    type="text"
-                    onChange={handleChange}
-                />
-                <InputField
-                    label="image_url"
-                    name="image_url"
-                    type="text"
-                    onChange={handleChange}
-                />
-                <button onClick={addMemberClick}>Add Member</button>
+            <form className="add-member-container">
+                <div>
+                    <div>
+                        <MemberPic size="big" />
+                    </div>
+                    <input
+                        className="input-file"
+                        type="file"
+                        accept="image/*"
+                        onChange={getPhoto}
+                    />
+                    <InputField
+                        label="image_url"
+                        name="image_url"
+                        type="text"
+                        onChange={handleChange}
+                    />
+                </div>
+                <div>
+                    <div className="line">
+                        <InputField
+                            label="first"
+                            name="first"
+                            type="text"
+                            onChange={handleChange}
+                        />
+                        <InputField
+                            label="last"
+                            name="last"
+                            type="text"
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="line">
+                        <InputField
+                            label="birth"
+                            name="birth"
+                            type="date"
+                            onChange={handleChange}
+                        />
+                        <InputField
+                            label="death"
+                            name="death"
+                            type="date"
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <textarea
+                        defaultValue={""}
+                        name="bio"
+                        rows="4"
+                        className="bio-editor-textarea"
+                        maxLength="300"
+                        onChange={handleChange}
+                    />
+
+                    <button onClick={addMemberClick}>Add Member</button>
+                </div>
             </form>
             <></>
         </div>

@@ -58,7 +58,7 @@ export default function viewMember({}) {
                 <div className="member-view-container">
                     <div>
                         <img
-                            src={member.image_url}
+                            src={member.image_url || "/default-member.png"}
                             alt={`photo of ${member.first} ${member.last}`}
                         />
                         <div

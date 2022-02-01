@@ -38,6 +38,10 @@ body {
     position: sticky;
 }
 
+.logo:hover {
+    cursor: pointer;
+}
+
 .logo h1 {
     color: black;
     font-size: 48px;
@@ -172,6 +176,16 @@ body {
     filter: grayscale(0%);
     cursor: pointer;
 }
+/* add-member */
+.add-member-container {
+    display: flex;
+    column-gap: var(--offset-2);
+}
+
+.line {
+    display: flex;
+}
+
 /* member-view */
 
 .member-view-container {
