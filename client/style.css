@@ -28,7 +28,7 @@ body {
 
 /* ----header---- */
 .header {
-    height: 80px;
+    height: 75px;
     background-color: var(--yellow-color);
     display: flex;
     justify-content: space-between;
@@ -192,13 +192,33 @@ body {
 .member-view-container {
     background-color: lightgray;
 
-    display: flex;
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    grid-template-rows: 200px 300px;
 
     height: 100%;
+    grid-template-areas:
+        "photo bio"
+        "photo relatives";
 }
 .bio-container {
     display: flex;
     flex-direction: column;
+    grid-area: bio;
+}
+.photo-container {
+    grid-area: photo;
+    position: relative;
+}
+.relatives-box {
+    grid-area: relatives;
+}
+.view-photo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 350px;
+    height: 500px;
 }
 
 .relatives-list {
@@ -208,10 +228,35 @@ body {
 .change-photo {
     width: 50px;
     height: 50px;
+    z-index: 3;
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 
 .relatives-container {
     background-color: var(--yellow-color);
+}
+
+.tree-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 3;
+    width: 50px;
+    height: 50px;
+}
+.photo-uploader {
+    background-color: var(--yellow-color);
+    height: 50px;
+    width: 350px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 /* modal */

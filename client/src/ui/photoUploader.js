@@ -49,6 +49,7 @@ export default function PhotoUploader(props) {
                     dispatch(
                         changePhotoById({ id: props.memberId, url: result.url })
                     );
+                    location.reload();
                     props.close();
 
                     //dispatch - change url
@@ -67,17 +68,17 @@ export default function PhotoUploader(props) {
     // };
 
     return (
-        <>
+        <div className="photo-uploader">
             <input
                 className="input-file"
                 type="file"
                 accept="image/*"
                 onChange={getPhoto}
             />
-            <button className="btn" onClick={uploadPhoto}>
+            <button className="btn-primary" onClick={uploadPhoto}>
                 Upload
             </button>
-        </>
+        </div>
         // <div className="overlay" onClick={closeModal}>
         //     <div className="modal shadow ">
         //         <div className="modal-header">

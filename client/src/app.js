@@ -55,7 +55,6 @@ export default function App() {
                     </Route>
                 </BrowserRouter>
             </div>
-            <div>family tree</div>
         </>
     );
 }

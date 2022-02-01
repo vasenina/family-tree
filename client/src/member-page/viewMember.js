@@ -1,5 +1,6 @@
 import { useParams } from "react-router";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import MemberRelatives from "./memberRelatives";
 import PhotoUploader from "../ui/photoUploader";
@@ -56,13 +57,19 @@ export default function viewMember({}) {
             {error && <p>{error}</p>}
             {member && (
                 <div className="member-view-container">
-                    <div>
+                    <div className="photo-container">
+                        <Link to={`/member-tree/${id}`}>
+                            <button className="btn-primary tree-btn">
+                                Show Tree
+                            </button>
+                        </Link>
                         <img
                             src={member.image_url || "/default-member.png"}
                             alt={`photo of ${member.first} ${member.last}`}
+                            className="view-photo"
                         />
                         <div
-                            className="btn change-photo"
+                            className="btn-primary change-photo"
                             onClick={toggleUploader}
                         >
                             {" "}
@@ -79,6 +86,14 @@ export default function viewMember({}) {
                         <h1>
                             {member.first} {member.last}
                         </h1>
+                        <p>
+                            {member.birth || "--/--/----"}{" "}
+                            {member.death || "--/--/----"}
+                        </p>
+                        <p>City: {member.city || "--------"}</p>
+                        <p>{member.bio}</p>
+                    </div>
+                    <div className="relatives-box">
                         <MemberRelatives
                             id={member.id}
                             addRelations={addRelativesToggler}

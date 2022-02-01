@@ -46,7 +46,7 @@ module.exports.getAllRelations = () => {
 
 module.exports.getMemberInfoById = (id) => {
     console.log("DB: user wants to see member", id);
-    const q = `SELECT id, first, last, image_url
+    const q = `SELECT id, first, last, image_url,  birth, death, bio, gender, city
                 FROM members
                 WHERE id = $1;`;
     const params = [id];
