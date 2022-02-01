@@ -50,7 +50,7 @@ export default function App() {
                     <Route path="/tree">
                         <FamilyTree />
                     </Route>
-                    <Route path="/member-tree">
+                    <Route path="/member-tree/:id">
                         <MemberTree />
                     </Route>
                 </BrowserRouter>

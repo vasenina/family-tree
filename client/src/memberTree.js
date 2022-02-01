@@ -2,15 +2,18 @@ import Graph from "react-graph-vis";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { useParams } from "react-router";
 //import "./network.css";
 
 export default function MemberTree() {
+    const { id } = useParams();
     const [edges, setEdges] = useState([
-        { from: 4, to: 1 },
-        { from: 4, to: 2 },
-        { from: 2, to: 7 },
-        { from: 2, to: 8 },
-        { from: 1, to: 9 },
+        { from: 2, to: 4 },
+
+        { from: 7, to: 2 },
+        { from: 8, to: 2 },
+        { from: 1, to: 4 },
+        { from: 9, to: 1 },
     ]);
 
     const family = useSelector((state) => state.familyTree);
@@ -28,7 +31,7 @@ export default function MemberTree() {
 
     useEffect(() => {
         if (family?.length > 0) {
-            generateEdges(family, 4);
+            setEdges(generateEdges(family, id));
         }
     }, [family]);
     // useEffect(() => {
@@ -62,6 +65,7 @@ export default function MemberTree() {
 
     const options = {
         autoResize: false,
+        interaction: { zoomView: false },
         nodes: {
             shape: "image",
             borderWidth: 2,
@@ -79,13 +83,21 @@ export default function MemberTree() {
         },
         layout: {
             hierarchical: {
-                parentCentralization: true,
+                //parentCentralization: true,
                 sortMethod: "directed",
-                direction: "UD",
+                // direction: "UD",
                 shakeTowards: "roots",
             },
             //improvedLayout: true,
         },
+        // physics: {
+        //     barnesHut: {
+        //         springLength: 1000,
+        //         springConstant: 1,
+        //         avoidOverlap: 1,
+        //         //avoidOverlap: 1,
+        //     },
+        // },
         edges: {
             color: "#1e3a60",
             arrows: {
@@ -124,6 +136,7 @@ function makeFamilyDictionary(family) {
     let newFamily = {};
     for (let i = 0; i < family.length; i++) {
         newFamily[family[i].id] = {
+            id: family[i].id,
             last: family[i].last,
             first: family[i].first,
             child: family[i].child ? [...family[i].child] : null,
@@ -137,15 +150,51 @@ function generateEdges(family, member_id) {
     console.log("Relations", family);
     const familyDict = makeFamilyDictionary(family);
     console.log("Dictionary", familyDict);
-    const edges = deapSearch(familyDict, member_id);
+    const edges = [
+        ...deapSearchParents(familyDict, member_id),
+        ...deapSearchChildren(familyDict, member_id),
+    ];
     console.log(edges);
 
     return edges;
 }
 
-function deapSearch(dictionary, id) {
-    const arr = [];
+function deapSearchParents(dictionary, id) {
+    console.log("DEAP Search");
+    let edgesArr = [];
+    let queue = [];
     console.log("deapSearch");
+    queue.push(dictionary[id]);
+    while (queue.length > 0) {
+        let current = queue.shift();
+        if (current.parent?.length > 0) {
+            for (let parent of current.parent) {
+                queue.push(dictionary[parent]);
+                edgesArr.push({ from: parent, to: current.id });
+                // console.log("EDGES ARR", edgesArr);
+            }
+        }
+    }
+    console.log("final arr PARENT", edgesArr);
+    return edgesArr;
+}
 
-    return arr;
+function deapSearchChildren(dictionary, id) {
+    console.log("DEAP Search");
+    let edgesArr = [];
+    let queue = [];
+    console.log("deapSearch");
+    queue.push(dictionary[id]);
+    while (queue.length > 0) {
+        let current = queue.shift();
+        if (current.child?.length > 0) {
+            for (let child of current.child) {
+                queue.push(dictionary[child]);
+                edgesArr.push({ from: current.id, to: child });
+                // console.log("EDGES ARR", edgesArr);
+            }
+        }
+    }
+    console.log("final arr CHILD", edgesArr);
+    return edgesArr;
 }
