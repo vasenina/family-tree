@@ -6,11 +6,14 @@ export default function familyTreeReducer(familyTree = [], action) {
     if (action.type == "family-tree/changePhoto") {
         console.log(action.playload);
         const newFamilyTree = familyTree.map((member) => {
-            if (member.id === action.playload.data.id) {
+            console.log("Family TRee map ", member.id, action.playload.data.id);
+            if (member.id == action.playload.data.id) {
+                console.log("action.playload.data", action.playload.data);
                 const newMember = {
                     ...member,
                     image_url: action.playload.data.url,
                 };
+                console.log("newMember", newMember);
                 return newMember;
             }
             return member;
