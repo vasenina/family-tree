@@ -47,6 +47,8 @@ export default function FamilyTree() {
 
     const options = {
         autoResize: false,
+        interaction: { zoomView: false },
+
         nodes: {
             shape: "image",
             borderWidth: 2,
@@ -65,10 +67,11 @@ export default function FamilyTree() {
         layout: {
             // hierarchical: {
             //     parentCentralization: true,
+            //     sortMethod: "directed",
             //     direction: "UD",
             //     shakeTowards: "roots",
             // },
-            //improvedLayout: true,
+            improvedLayout: true,
         },
         edges: {
             color: "#1e3a60",
