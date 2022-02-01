@@ -1,11 +1,14 @@
 import { useHistory, Redirect } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import useTextInput from "../hooks/useTextInput";
 
 import MemberPic from "../ui/memberPic";
 import InputField from "../ui/inputField";
+import { addMember } from "../redux/familyTree/slice.js";
 
 export default function AddMember({}) {
+    const dispatch = useDispatch();
     const history = useHistory();
     const [values, handleChange] = useTextInput();
     const [file, setFile] = useState();
@@ -23,6 +26,8 @@ export default function AddMember({}) {
     const addingUserToRedux = (member) => {
         //
         console.log("server sent me this member: ", member);
+
+        dispatch(addMember(member));
 
         location.assign(`/member/${member.id}`);
     };

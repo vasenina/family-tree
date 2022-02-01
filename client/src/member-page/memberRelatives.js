@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 import MemberPic from "../ui/memberPic";
 
@@ -83,13 +84,16 @@ export default function MemberRelatives({ id, addRelations }) {
         }
     };
     return (
-        <>
+        <div className="relatives-container">
             relatives
             {returnRelativesList(parents, "parent")}
             {returnRelativesList(siblings, "sibling")}
             {returnRelativesList(children, "child")}
             {returnRelativesList(spouse, "spouse")}
-            {returnRelativesList(other, "other")}
-        </>
+            {/* {returnRelativesList(other, "other")} */}
+            <Link to={`/member-tree/${id}`}>
+                <button className="btn-primary ">Show Tree</button>
+            </Link>
+        </div>
     );
 }

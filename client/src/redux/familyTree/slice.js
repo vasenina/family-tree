@@ -131,6 +131,10 @@ export default function familyTreeReducer(familyTree = [], action) {
         return newFamilyTree;
     }
 
+    if (action.type == "family-tree/addMember") {
+        return [...familyTree, action.playload.member];
+    }
+
     return familyTree;
 }
 
@@ -160,5 +164,12 @@ export function addRelation(relation, who) {
     return {
         type: "family-tree/addRelation-" + who,
         playload: { relation },
+    };
+}
+
+export function addMember(member) {
+    return {
+        type: "family-tree/addMember",
+        playload: { member },
     };
 }

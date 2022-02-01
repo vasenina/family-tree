@@ -99,6 +99,7 @@ body {
     background-color: var(--yellow-color);
     border: 1px solid black;
     color: black;
+    height: 50px;
 }
 .btn-primary:hover {
     background-color: var(--green-color);
@@ -189,8 +190,10 @@ body {
 /* member-view */
 
 .member-view-container {
-    background-color: var(--yellow-color);
+    background-color: lightgray;
+
     display: flex;
+
     height: 100%;
 }
 .bio-container {
@@ -205,6 +208,10 @@ body {
 .change-photo {
     width: 50px;
     height: 50px;
+}
+
+.relatives-container {
+    background-color: var(--yellow-color);
 }
 
 /* modal */
@@ -226,7 +233,7 @@ body {
 .modal {
     background-color: var(--yellow-color);
     z-index: 3;
-    padding: 0;
+    padding: 50px 0;
     border-radius: 1px;
     width: 60%;
     display: flex;

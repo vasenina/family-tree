@@ -16,10 +16,16 @@ module.exports.addMember = (member) => {
     const first = member.first ? member.first : null;
     const last = member.last ? member.last : null;
     const image_url = member.image_url ? member.image_url : null;
-    const q = `INSERT INTO members (first, last, image_url)
-                 VALUES ($1, $2, $3)
+    const birth = member.birth ? member.birth : null;
+    const death = member.death ? member.death : null;
+    const bio = member.bio ? member.bio : null;
+    const gender = member.gender ? member.gender : null;
+    const city = member.city ? member.city : null;
+
+    const q = `INSERT INTO members (first, last, image_url, birth, death, bio, gender, city)
+                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
                  RETURNING id;`;
-    const params = [first, last, image_url];
+    const params = [first, last, image_url, birth, death, bio, gender, city];
     return db.query(q, params);
 };
 
