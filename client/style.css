@@ -55,6 +55,7 @@ body {
     margin-left: var(--offset);
     display: inline;
 }
+
 .icon-btn:hover {
     cursor: pointer;
 }
@@ -205,6 +206,9 @@ body {
     display: flex;
     flex-direction: column;
     grid-area: bio;
+    position: relative;
+    align-items: center;
+    padding-top: var(--offset-2);
 }
 .photo-container {
     grid-area: photo;
@@ -234,6 +238,14 @@ body {
     right: 0;
 }
 
+.edit-member-btn {
+    width: 50px;
+    position: absolute;
+    top: var(--offset-2);
+    right: 0;
+    background-color: lightgray;
+}
+
 .relatives-container {
     background-color: var(--yellow-color);
 }
@@ -258,7 +270,24 @@ body {
     justify-content: space-between;
     align-items: center;
 }
+.close-btn {
+    padding: var(--offset);
+}
+.close-btn:hover {
+    cursor: pointer;
+}
 
+.date-view {
+    display: flex;
+}
+.date-text {
+    display: inline;
+    margin: var(--offset-2);
+    font-weight: 600;
+}
+.bio-text {
+    margin-bottom: var(--offset);
+}
 /* modal */
 
 .overlay {

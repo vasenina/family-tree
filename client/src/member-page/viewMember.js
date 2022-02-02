@@ -2,6 +2,8 @@ import { useParams } from "react-router";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
+import DayJS from "react-dayjs";
+
 import MemberRelatives from "./memberRelatives";
 import PhotoUploader from "../ui/photoUploader";
 import AddRelations from "./addRelations";
@@ -83,15 +85,44 @@ export default function viewMember({}) {
                         )}
                     </div>
                     <div className="bio-container">
+                        <div className="btn edit-member-btn">
+                            <img src="/edit-icon.svg" className="icon-btn" />
+                        </div>
                         <h1>
                             {member.first} {member.last}
                         </h1>
-                        <p>
-                            {member.birth || "--/--/----"}{" "}
-                            {member.death || "--/--/----"}
+                        <div className="date-view">
+                            {member.birth && (
+                                <DayJS
+                                    format="DD MMM YYYY"
+                                    className="date-text"
+                                >
+                                    {member.birth}
+                                </DayJS>
+                            )}
+                            {!member.birth && (
+                                <p className="date-text">--/--/----</p>
+                            )}
+                            {/* <DayJS format="DD MMM YYYY" className="date-text">
+                                {member.birth || "--/--/----"}
+                            </DayJS>{" "} */}
+                            <p className="date-text"> - </p>
+                            {member.death && (
+                                <DayJS
+                                    format="DD MMM YYYY"
+                                    className="date-text"
+                                >
+                                    {member.death}
+                                </DayJS>
+                            )}
+                            {!member.death && (
+                                <p className="date-text">--/--/----</p>
+                            )}
+                        </div>
+                        <p className="bio-text">
+                            City: {member.city || "--------"}
                         </p>
-                        <p>City: {member.city || "--------"}</p>
-                        <p>{member.bio}</p>
+                        <p className="bio-text">{member.bio}</p>
                     </div>
                     <div className="relatives-box">
                         <MemberRelatives
