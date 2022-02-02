@@ -4,6 +4,20 @@ import { useSelector } from "react-redux";
 import MemberPic from "../ui/memberPic";
 
 export default function MemberRelatives({ id, addRelations }) {
+    const [relativeNames, setRelativeNames] = useState({
+        parent: "Parents",
+        sibling: "Siblings",
+        spouse: "Spouse",
+        child: "Children",
+        other: "Other",
+    });
+
+    //  "parent")}
+    //         {returnRelativesList(siblings, "sibling")}
+    //         {returnRelativesList(children, "child")}
+    //         {returnRelativesList(spouse, "spouse")}
+    //         {/* {returnRelativesList(other, "other")}
+
     const currentMember = useSelector((state) => {
         return state.familyTree?.find((member) => member.id === id);
     });
@@ -44,7 +58,7 @@ export default function MemberRelatives({ id, addRelations }) {
         if (relatives.length <= 0) {
             return (
                 <div className="relatives-list ">
-                    {type}{" "}
+                    <div className="relative-type">{relativeNames[type]}</div>
                     <button
                         className="btn-primary add-btn"
                         onClick={() => {
@@ -57,18 +71,18 @@ export default function MemberRelatives({ id, addRelations }) {
         } else {
             return (
                 <div className="relatives-list ">
-                    {type}
+                    <div className="relative-type">{relativeNames[type]}</div>
                     {relatives.map((member) => {
                         return (
-                            <div key={member.id}>
-                                <MemberPic
-                                    imageUrl={member.image_url}
-                                    css="img_profile_small"
-                                    action={() => {
-                                        location.assign(`/member/${member.id}`);
-                                    }}
-                                />
-                            </div>
+                            // <div key={member.id}>  </div>
+                            <MemberPic
+                                key={member.id}
+                                imageUrl={member.image_url}
+                                css="img_profile_small"
+                                action={() => {
+                                    location.assign(`/member/${member.id}`);
+                                }}
+                            />
                         );
                     })}
                     <button
@@ -84,12 +98,14 @@ export default function MemberRelatives({ id, addRelations }) {
     };
     return (
         <div className="relatives-container">
-            relatives
-            {returnRelativesList(parents, "parent")}
-            {returnRelativesList(siblings, "sibling")}
-            {returnRelativesList(children, "child")}
-            {returnRelativesList(spouse, "spouse")}
-            {/* {returnRelativesList(other, "other")} */}
+            <div className="member-relatives-block">
+                {returnRelativesList(parents, "parent")}
+                {returnRelativesList(siblings, "sibling")}
+                {returnRelativesList(children, "child")}
+                {returnRelativesList(spouse, "spouse")}
+                {/* {returnRelativesList(other, "other")} */}
+            </div>
+            <div className="relative-end"></div>
         </div>
     );
 }

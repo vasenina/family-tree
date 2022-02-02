@@ -87,8 +87,8 @@ export default function AddRelations({ id, close, type }) {
     return (
         <div className="overlay" onClick={closeModal}>
             <div className="modal">
-                Add Connections
-                <div className="relatives-list ">
+                <h2>Choose a relative</h2>
+                <div className="relatives-list margin-modal">
                     {otherMembers &&
                         otherMembers.map((member) => {
                             return (
@@ -108,7 +108,10 @@ export default function AddRelations({ id, close, type }) {
                             );
                         })}
                 </div>
-                <button className="btn" onClick={addRelation}>
+                <button
+                    className="btn-primary add-relations-btn"
+                    onClick={addRelation}
+                >
                     Add
                 </button>
             </div>

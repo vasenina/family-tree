@@ -21,17 +21,17 @@ export default function Family({}) {
             {family &&
                 family.map((member) => {
                     return (
-                        <div key={member.id}>
-                            <MemberPic
-                                first={member.first}
-                                last={member.last}
-                                imageUrl={member.image_url}
-                                css="img_profile_big"
-                                action={() => {
-                                    location.assign(`/member/${member.id}`);
-                                }}
-                            />
-                        </div>
+                        // <div key={member.id}> </div>
+                        <MemberPic
+                            key={member.id}
+                            first={member.first}
+                            last={member.last}
+                            imageUrl={member.image_url}
+                            css="img_profile_big"
+                            action={() => {
+                                location.assign(`/member/${member.id}`);
+                            }}
+                        />
                     );
                 })}
             <Link to="/add-member">

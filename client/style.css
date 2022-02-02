@@ -126,6 +126,9 @@ body {
     font-size: 32px;
     /* color: black; */
 }
+.add-relations-btn {
+    padding: 0 var(--offset-2);
+}
 
 /* ui input */
 
@@ -240,10 +243,6 @@ body {
     height: 500px;
 }
 
-.relatives-list {
-    display: flex;
-}
-
 .change-photo {
     width: 50px;
     height: 50px;
@@ -262,7 +261,46 @@ body {
 }
 
 .relatives-container {
+    /* background-color: var(--yellow-color); */
+    padding: 25px 0;
+    /* width: 50%; */
+    position: relative;
+}
+.member-relatives-block {
+    position: absolute;
+    left: -75px;
+    top: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 5;
+}
+
+.relatives-list {
+    display: flex;
+}
+
+.margin-modal {
+    margin: var(--offset-3);
+}
+
+.relative-end {
+    height: 200px;
+    width: 60%;
+    position: absolute;
+    left: 50px;
+    /* background-color: var(--yellow-color); */
+    background: linear-gradient(
+        90deg,
+        #ffd600 41.67%,
+        rgba(196, 196, 196, 0) 100%
+    );
+}
+.relative-type {
+    width: 100px;
+    height: 50px;
     background-color: var(--yellow-color);
+    text-align: center;
 }
 
 .tree-btn {
@@ -323,7 +361,7 @@ body {
 
 .overlay {
     background-color: rgba(0, 0, 0, 0.3);
-    z-index: 2;
+    z-index: 10;
     position: fixed;
     top: 0;
     left: 0;
@@ -337,8 +375,8 @@ body {
 
 .modal {
     background-color: var(--yellow-color);
-    z-index: 3;
-    padding: 50px 0;
+    z-index: 11;
+    padding: 25px 0;
     border-radius: 1px;
     width: 60%;
     display: flex;

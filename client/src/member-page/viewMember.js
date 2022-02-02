@@ -92,8 +92,10 @@ export default function viewMember({}) {
                             className="btn-primary change-photo"
                             onClick={toggleUploader}
                         >
-                            {" "}
-                            Change{" "}
+                            <img
+                                src="/photo.svg"
+                                className="icon-btn icon-tree"
+                            />
                         </div>
                         {photoUploaderToggler && (
                             <PhotoUploader
