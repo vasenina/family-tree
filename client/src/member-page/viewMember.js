@@ -7,12 +7,14 @@ import DayJS from "react-dayjs";
 import MemberRelatives from "./memberRelatives";
 import PhotoUploader from "../ui/photoUploader";
 import AddRelations from "./addRelations";
+import BioEditor from "../ui/bioEditor";
 
 export default function viewMember({}) {
     const { id } = useParams();
     const [member, setMember] = useState();
     const [error, setError] = useState();
     const [photoUploaderToggler, setPhotoUploaderToggler] = useState(false);
+    const [editBioToggler, setEditBioToggler] = useState(false);
     const [addRelativesIsVisible, setAddRelativesIsVisible] = useState(false);
     const [relationType, setRelationType] = useState();
 
@@ -39,6 +41,11 @@ export default function viewMember({}) {
         setPhotoUploaderToggler(toggle);
     };
 
+    const toggleEditBio = () => {
+        const toggle = !editBioToggler;
+        setEditBioToggler(toggle);
+    };
+
     const addRelativesToggler = (type) => {
         let relationType = type;
         if (type == "parent") {
@@ -61,12 +68,15 @@ export default function viewMember({}) {
                 <div className="member-view-container">
                     <div className="photo-container">
                         <Link to={`/member-tree/${id}`}>
-                            <button className="btn-primary tree-btn">
-                                Show Tree
-                            </button>
+                            <div className="btn-primary tree-btn">
+                                <img
+                                    src="/family-tree.svg"
+                                    className="icon-btn icon-tree"
+                                />
+                            </div>
                         </Link>
                         <img
-                            src={member.image_url || "/default-member.png"}
+                            src={member.image_url || "/default-member-big.png"}
                             alt={`photo of ${member.first} ${member.last}`}
                             className="view-photo"
                         />
@@ -85,9 +95,15 @@ export default function viewMember({}) {
                         )}
                     </div>
                     <div className="bio-container">
-                        <div className="btn edit-member-btn">
+                        <div
+                            className="btn edit-member-btn icon-tree"
+                            onClick={toggleEditBio}
+                        >
                             <img src="/edit-icon.svg" className="icon-btn" />
                         </div>
+                        {editBioToggler && (
+                            <BioEditor member={member} close={toggleEditBio} />
+                        )}
                         <h1>
                             {member.first} {member.last}
                         </h1>
@@ -103,9 +119,7 @@ export default function viewMember({}) {
                             {!member.birth && (
                                 <p className="date-text">--/--/----</p>
                             )}
-                            {/* <DayJS format="DD MMM YYYY" className="date-text">
-                                {member.birth || "--/--/----"}
-                            </DayJS>{" "} */}
+
                             <p className="date-text"> - </p>
                             {member.death && (
                                 <DayJS

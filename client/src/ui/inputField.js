@@ -1,4 +1,5 @@
-export default function InputField({ label, name, type, onChange }) {
+export default function InputField({ label, name, type, onChange, value }) {
+    //console.log("InputValue", value);
     return (
         <div className="input_group">
             <label htmlFor={name} className="input_label">
@@ -10,6 +11,7 @@ export default function InputField({ label, name, type, onChange }) {
                 name={name}
                 className="input_field"
                 onChange={onChange}
+                defaultValue={value}
             />
         </div>
     );

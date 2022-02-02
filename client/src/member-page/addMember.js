@@ -104,7 +104,7 @@ export default function AddMember({}) {
                         onChange={handleChange}
                     />
                 </div>
-                <div>
+                <div className="bio-container">
                     <div className="line">
                         <InputField
                             label="first"
@@ -133,6 +133,14 @@ export default function AddMember({}) {
                             onChange={handleChange}
                         />
                     </div>
+                    <div className="line">
+                        <InputField
+                            label="city"
+                            name="city"
+                            type="text"
+                            onChange={handleChange}
+                        />
+                    </div>
                     <textarea
                         defaultValue={""}
                         name="bio"
@@ -142,7 +150,12 @@ export default function AddMember({}) {
                         onChange={handleChange}
                     />
 
-                    <button onClick={addMemberClick}>Add Member</button>
+                    <button
+                        onClick={addMemberClick}
+                        className="btn-primary add-member-btn "
+                    >
+                        Add Member
+                    </button>
                 </div>
             </form>
             <></>
