@@ -27,7 +27,7 @@ export default function Header({}) {
                         console.log("logout clicked");
                         fetch("/logout", {})
                             .then(() => {
-                                //location.assign("/login");
+                                location.assign("/");
                             })
                             .catch((err) => {
                                 console.log("logout error", err);

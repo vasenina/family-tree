@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom";
-//import Welcome from "./welcome";
+import Welcome from "./welcome";
 import App from "./app";
 
 import { Provider } from "react-redux";
@@ -22,7 +22,7 @@ fetch("/user-cookie/id.json")
         console.log("DAta", data);
         if (!data.userId) {
             // window.history.replaceState({}, null, "/");
-            // ReactDOM.render(<Welcome />, document.querySelector("main"));
+            ReactDOM.render(<Welcome />, document.querySelector("main"));
         } else {
             // init(store);
             store.dispatch(receiveProfile({ id: data.userId }));

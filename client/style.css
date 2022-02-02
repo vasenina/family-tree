@@ -347,7 +347,7 @@ body {
     width: 100%;
     position: absolute;
     top: 0;
-    z-index: 3px;
+    z-index: 20;
     background-color: var(--yellow-color);
     display: flex;
     flex-direction: column;
@@ -383,4 +383,10 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+/* wall-container */
+.wall-container {
+    background-color: var(--yellow-color);
+    /* grid-area: wall; */
 }

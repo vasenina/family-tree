@@ -8,6 +8,7 @@ import MemberRelatives from "./memberRelatives";
 import PhotoUploader from "../ui/photoUploader";
 import AddRelations from "./addRelations";
 import BioEditor from "../ui/bioEditor";
+import MemberWall from "./memberWall";
 
 export default function viewMember({}) {
     const { id } = useParams();
@@ -73,91 +74,100 @@ export default function viewMember({}) {
         <>
             {error && <p>{error}</p>}
             {member && (
-                <div className="member-view-container">
-                    <div className="photo-container">
-                        <Link to={`/member-tree/${id}`}>
-                            <div className="btn-primary tree-btn">
+                <div>
+                    <div className="member-view-container">
+                        <div className="photo-container">
+                            <Link to={`/member-tree/${id}`}>
+                                <div className="btn-primary tree-btn">
+                                    <img
+                                        src="/family-tree.svg"
+                                        className="icon-btn icon-tree"
+                                    />
+                                </div>
+                            </Link>
+                            <img
+                                src={
+                                    member.image_url ||
+                                    "/default-member-big.png"
+                                }
+                                alt={`photo of ${member.first} ${member.last}`}
+                                className="view-photo"
+                            />
+                            <div
+                                className="btn-primary change-photo"
+                                onClick={toggleUploader}
+                            >
                                 <img
-                                    src="/family-tree.svg"
+                                    src="/photo.svg"
                                     className="icon-btn icon-tree"
                                 />
                             </div>
-                        </Link>
-                        <img
-                            src={member.image_url || "/default-member-big.png"}
-                            alt={`photo of ${member.first} ${member.last}`}
-                            className="view-photo"
-                        />
-                        <div
-                            className="btn-primary change-photo"
-                            onClick={toggleUploader}
-                        >
-                            <img
-                                src="/photo.svg"
-                                className="icon-btn icon-tree"
-                            />
-                        </div>
-                        {photoUploaderToggler && (
-                            <PhotoUploader
-                                memberId={id}
-                                close={toggleUploader}
-                            />
-                        )}
-                    </div>
-                    <div className="bio-container">
-                        <div
-                            className="btn edit-member-btn icon-tree"
-                            onClick={toggleEditBio}
-                        >
-                            <img src="/edit-icon.svg" className="icon-btn" />
-                        </div>
-                        {editBioToggler && (
-                            <BioEditor
-                                member={member}
-                                close={toggleEditBio}
-                                bioChanger={changeBio}
-                            />
-                        )}
-                        <h1>
-                            {member.first} {member.last}
-                        </h1>
-                        <div className="date-view">
-                            {member.birth && (
-                                <DayJS
-                                    format="DD MMM YYYY"
-                                    className="date-text"
-                                >
-                                    {member.birth}
-                                </DayJS>
+                            {photoUploaderToggler && (
+                                <PhotoUploader
+                                    memberId={id}
+                                    close={toggleUploader}
+                                />
                             )}
-                            {!member.birth && (
-                                <p className="date-text">--/--/----</p>
+                        </div>
+                        <div className="bio-container">
+                            <div
+                                className="btn edit-member-btn icon-tree"
+                                onClick={toggleEditBio}
+                            >
+                                <img
+                                    src="/edit-icon.svg"
+                                    className="icon-btn"
+                                />
+                            </div>
+                            {editBioToggler && (
+                                <BioEditor
+                                    member={member}
+                                    close={toggleEditBio}
+                                    bioChanger={changeBio}
+                                />
                             )}
+                            <h1>
+                                {member.first} {member.last}
+                            </h1>
+                            <div className="date-view">
+                                {member.birth && (
+                                    <DayJS
+                                        format="DD MMM YYYY"
+                                        className="date-text"
+                                    >
+                                        {member.birth}
+                                    </DayJS>
+                                )}
+                                {!member.birth && (
+                                    <p className="date-text">--/--/----</p>
+                                )}
 
-                            <p className="date-text"> - </p>
-                            {member.death && (
-                                <DayJS
-                                    format="DD MMM YYYY"
-                                    className="date-text"
-                                >
-                                    {member.death}
-                                </DayJS>
-                            )}
-                            {!member.death && (
-                                <p className="date-text">--/--/----</p>
-                            )}
+                                <p className="date-text"> - </p>
+                                {member.death && (
+                                    <DayJS
+                                        format="DD MMM YYYY"
+                                        className="date-text"
+                                    >
+                                        {member.death}
+                                    </DayJS>
+                                )}
+                                {!member.death && (
+                                    <p className="date-text">--/--/----</p>
+                                )}
+                            </div>
+                            <p className="bio-text">
+                                City: {member.city || "--------"}
+                            </p>
+                            <p className="bio-text">{member.bio}</p>
                         </div>
-                        <p className="bio-text">
-                            City: {member.city || "--------"}
-                        </p>
-                        <p className="bio-text">{member.bio}</p>
+                        <div className="relatives-box">
+                            <MemberRelatives
+                                id={member.id}
+                                addRelations={addRelativesToggler}
+                            />
+                        </div>
                     </div>
-                    <div className="relatives-box">
-                        <MemberRelatives
-                            id={member.id}
-                            addRelations={addRelativesToggler}
-                        />
-                    </div>
+                    <MemberWall />
                 </div>
             )}
             {addRelativesIsVisible && (

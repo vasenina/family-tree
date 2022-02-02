@@ -135,6 +135,9 @@ export default function familyTreeReducer(familyTree = [], action) {
         return [...familyTree, action.playload.member];
     }
 
+    // if ((action.type = "family-tree/updateMember")) {
+    //     return [...familyTree, action.playload.member];
+    // }
     return familyTree;
 }
 
@@ -170,6 +173,13 @@ export function addRelation(relation, who) {
 export function addMember(member) {
     return {
         type: "family-tree/addMember",
+        playload: { member },
+    };
+}
+
+export function updateMember(member) {
+    return {
+        type: "family-tree/updateMember",
         playload: { member },
     };
 }

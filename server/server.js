@@ -7,6 +7,7 @@ const db = require("./db/db");
 const cookieSession = require("cookie-session");
 
 const { member } = require("./routers/member.js");
+const { auth } = require("./routers/auth.js");
 
 app.use(compression());
 
@@ -27,6 +28,7 @@ app.use(express.static(path.join(__dirname, "..", "client", "public")));
 app.use(express.json());
 
 app.use(member);
+app.use(auth);
 
 app.get("/clear", (req, res) => {
     req.session = null;
@@ -36,7 +38,7 @@ app.get("/clear", (req, res) => {
 });
 
 app.get("/user-cookie/id.json", function (req, res) {
-    req.session.userId = 1;
+    // req.session.userId = 1;
     res.json({
         userId: req.session.userId,
         //last: req.session.last,
