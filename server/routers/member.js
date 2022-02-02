@@ -113,6 +113,19 @@ member.post(
     }
 );
 
+member.post("/api/update-bio/:id", async (req, res) => {
+    console.log("user wants to update bio", req.body, req.params.id);
+    try {
+        await db.updateMemberBio(req.body, req.params.id);
+        res.json({ success: true });
+        return;
+    } catch (err) {
+        console.log("error in update bio", err);
+        res.status(500).json({ success: false });
+        return;
+    }
+});
+
 member.post("/api/add-relation", async (req, res) => {
     console.log("user wants to add relation", req.body);
     const { member_id, relative_id, type } = req.body;

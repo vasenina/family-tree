@@ -58,8 +58,16 @@ export default function viewMember({}) {
         setAddRelativesIsVisible(!addRelativesIsVisible);
     };
 
-    console.log("state", relationType);
-    // const togg
+    const changeBio = (values) => {
+        console.log("new Values", values);
+        let updMember = { ...member };
+        for (let prop in values) {
+            updMember[prop] = values[prop];
+        }
+        console.log(updMember);
+        setMember(updMember);
+        return;
+    };
 
     return (
         <>
@@ -102,7 +110,11 @@ export default function viewMember({}) {
                             <img src="/edit-icon.svg" className="icon-btn" />
                         </div>
                         {editBioToggler && (
-                            <BioEditor member={member} close={toggleEditBio} />
+                            <BioEditor
+                                member={member}
+                                close={toggleEditBio}
+                                bioChanger={changeBio}
+                            />
                         )}
                         <h1>
                             {member.first} {member.last}

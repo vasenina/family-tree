@@ -3,12 +3,34 @@ import InputField from "./inputField";
 
 import dayjs from "dayjs";
 
-export default function BioEditor({ member, close }) {
+export default function BioEditor({ member, close, bioChanger }) {
     const [values, handleChange] = useTextInput();
+    console.log("ID edit bio", member.id);
 
     const editMemberClick = (e) => {
         e.preventDefault();
-        location.reload();
+
+        fetch(`/api/update-bio/${member.id}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                if (data.success) {
+                    // console.log("Editor call biochanger", bioChanger);
+                    //dispatch new first and last
+                    //location.reload();
+                    bioChanger(values);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
         close();
     };
 

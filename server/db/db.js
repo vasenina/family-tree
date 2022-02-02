@@ -29,6 +29,28 @@ module.exports.addMember = (member) => {
     return db.query(q, params);
 };
 
+module.exports.updateMemberBio = (member, id) => {
+    console.log("update bio", member);
+    let params = [];
+
+    let q = "UPDATE members SET ";
+
+    let i = 1;
+    for (key in member) {
+        if (key != "id") {
+            params.push(member[key]);
+            q += ` ${key}=$${i},`;
+            i++;
+        }
+    }
+    params.push(id);
+    q = q.replace(/.$/, " ") + ` WHERE id = $${i};`;
+    console.log("DB: REQEST:", q, params);
+
+    return db.query(q, params);
+    //return;
+};
+
 module.exports.getAll = () => {
     console.log("DB: user wants to see all");
     const q = `SELECT id, first, last, image_url
