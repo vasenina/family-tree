@@ -69,6 +69,13 @@ export default function viewMember({}) {
         setMember(updMember);
         return;
     };
+    const changePhoto = (image) => {
+        let updMember = { ...member };
+        updMember.image_url = image;
+        setMember(updMember);
+
+        return;
+    };
 
     return (
         <>
@@ -106,6 +113,7 @@ export default function viewMember({}) {
                                 <PhotoUploader
                                     memberId={id}
                                     close={toggleUploader}
+                                    photoChanger={changePhoto}
                                 />
                             )}
                         </div>

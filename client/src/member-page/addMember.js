@@ -45,17 +45,32 @@ export default function AddMember({}) {
             if (values.last) {
                 fd.append("last", values.last);
             }
+            if (values.city) {
+                fd.append("city", values.city);
+            }
+            if (values.bio) {
+                fd.append("bio", values.bio);
+            }
+            if (values.birth) {
+                fd.append("birth", values.birth);
+            }
+            if (values.death) {
+                fd.append("birth", values.death);
+            }
 
             fetch("/api/add-member-and-photo", {
                 method: "POST",
                 body: fd,
             })
                 .then((res) => {
+                    console.log(res);
                     res.json();
                 })
                 .then((data) => {
+                    console.log("response photo", data);
                     if (data.success) {
                         addingUserToRedux(data.newMember);
+                        // location.assign(`/member/${data.id}`);
 
                         //add a user to redux
                     }
@@ -74,9 +89,13 @@ export default function AddMember({}) {
             })
                 .then((res) => res.json())
                 .then((data) => {
+                    console.log("response", data);
                     console.log("AddMember:data from server", data);
-                    addingUserToRedux(data.newMember);
-                    //add a user to redux
+                    if (data.success) {
+                        addingUserToRedux(data.newMember);
+                        //add a user to redux
+                        //location.assign(`/member/${data.id}`);
+                    }
                 })
                 .catch((err) => {
                     console.log("error addMember", err);

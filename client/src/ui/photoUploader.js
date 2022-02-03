@@ -12,6 +12,13 @@ export default function PhotoUploader(props) {
 
         setFile(e.target.files[0]);
     };
+    const [uploadButtonText, setText] = useState({
+        upload: "Upload",
+        loading: "...",
+    });
+    const [uploadButton, setUploadButton] = useState(
+        uploadButtonText["upload"]
+    );
     const uploadPhoto = () => {
         console.log("user wants to upload photo");
         if (!file) {
@@ -19,6 +26,7 @@ export default function PhotoUploader(props) {
             // this.setState({ error: "No file" });
             return;
         }
+        setUploadButton(uploadButtonText["loading"]);
         const fd = new FormData();
         fd.append("file", file);
         //fd.append("id", this.props.member);
@@ -38,7 +46,8 @@ export default function PhotoUploader(props) {
                     dispatch(
                         changePhotoById({ id: props.memberId, url: result.url })
                     );
-                    location.reload();
+                    props.photoChanger(result.url);
+                    // location.reload();
                     props.close();
 
                     //dispatch - change url
@@ -63,7 +72,7 @@ export default function PhotoUploader(props) {
                 onChange={getPhoto}
             />
             <button className="btn-primary" onClick={uploadPhoto}>
-                Upload
+                {uploadButton}
             </button>
         </div>
     );

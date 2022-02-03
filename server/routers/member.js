@@ -34,7 +34,9 @@ member.post("/api/add-member", async (req, res) => {
     try {
         const addedMember = await db.addMember(newMember);
         newMember.id = addedMember.rows[0].id;
-        res.send({ success: true, newMember });
+        console.log("new Member", newMember);
+
+        res.send({ success: true, newMember: newMember });
         return;
     } catch (err) {
         console.log("error in adding member", err);
@@ -59,8 +61,10 @@ member.post(
             console.log("new member with photo", newMember);
             try {
                 const member_id = await db.addMember(newMember);
-                newMember.id = member_id;
-                res.json({ success: true, newMember });
+                newMember.id = member_id.rows[0].id;
+                console.log("added new member with photo", newMember);
+                res.json({ success: true, newMember: newMember });
+                // res.send({ success: true });
                 return;
             } catch (err) {
                 console.log("error in adding member with photo", err);

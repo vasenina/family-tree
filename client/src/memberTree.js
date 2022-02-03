@@ -7,27 +7,11 @@ import { useParams } from "react-router";
 
 export default function MemberTree() {
     const { id } = useParams();
-    const [edges, setEdges] = useState([
-        { from: 2, to: 4 },
-
-        { from: 7, to: 2 },
-        { from: 8, to: 2 },
-        { from: 1, to: 4 },
-        { from: 9, to: 1 },
-    ]);
+    const [edges, setEdges] = useState();
 
     const family = useSelector((state) => state.familyTree);
-    console.log("FAMILY", family);
-    const users = useSelector((state) => {
-        return state.familyTree?.map((member) => {
-            return {
-                id: member.id,
-                label: `${member.first} ${member.last}`,
-                image: member.image_url || "/default-member.png",
-                hidden: false,
-            };
-        });
-    });
+    // console.log("FAMILY", family);
+
     let history = useHistory();
 
     useEffect(() => {
@@ -36,7 +20,7 @@ export default function MemberTree() {
             console.log("NEW RESULT", result);
 
             setEdges(result.edges);
-            setTestUsers(generateMemberNodes(result.memberList));
+
             setGraph({
                 nodes: generateMemberNodes(result.memberList),
                 edges: result.edges,
@@ -44,37 +28,8 @@ export default function MemberTree() {
         }
     }, [family]);
 
-    const [testUsers, setTestUsers] = useState();
     const [graph, setGraph] = useState();
 
-    // useEffect(() => {
-    //     if (family?.length > 0) {
-    //         // setTestUsers(selectTreeUsers(users));
-    //     }
-    // }, [users]);
-
-    // useEffect(() => {
-    //     console.log("NEt useEffect");
-    //     fetch("/api/relations")
-    //         .then((res) => res.json())
-    //         .then((data) => {
-    //             console.log("net in data", data);
-    //             if (data.success) {
-    //                 console.log(data);
-    //                 const graphEdges = data.relations.map((edge) => {
-    //                     const newEdge = {
-    //                         from: edge.member_id,
-    //                         to: edge.relative_id,
-    //                     };
-    //                     return newEdge;
-    //                 });
-    //                 setEdges(graphEdges);
-    //             }
-    //         });
-    // }, []);
-
-    console.log("Net users", users);
-    console.log("Net edges", edges);
     // const graph = {
     //     nodes: testUsers,
     //     edges: edges,
@@ -200,7 +155,7 @@ function deapSearchParents(dictionary, id, memberList) {
     console.log("DEAP Search");
     let edgesArr = [];
     let queue = [];
-    console.log("deapSearch");
+
     queue.push(dictionary[id]);
     memberList.push(dictionary[id]);
     while (queue.length > 0) {
@@ -214,7 +169,7 @@ function deapSearchParents(dictionary, id, memberList) {
             }
         }
     }
-    console.log("final arr PARENT", edgesArr);
+    // console.log("final arr PARENT", edgesArr);
     return edgesArr;
 }
 
@@ -222,7 +177,7 @@ function deapSearchChildren(dictionary, id, memberList) {
     console.log("DEAP Search");
     let edgesArr = [];
     let queue = [];
-    console.log("deapSearch");
+
     queue.push(dictionary[id]);
     while (queue.length > 0) {
         let current = queue.shift();
@@ -235,6 +190,6 @@ function deapSearchChildren(dictionary, id, memberList) {
             }
         }
     }
-    console.log("final arr CHILD", edgesArr);
+    // console.log("final arr CHILD", edgesArr);
     return edgesArr;
 }
