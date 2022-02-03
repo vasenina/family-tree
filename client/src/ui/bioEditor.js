@@ -8,8 +8,12 @@ export default function BioEditor({ member, close, bioChanger }) {
     console.log("ID edit bio", member.id);
 
     const editMemberClick = (e) => {
+        console.log("Update clicked", values);
         e.preventDefault();
-
+        if (Object.keys(values).length == 0) {
+            console.log("empty fields");
+            return;
+        }
         fetch(`/api/update-bio/${member.id}`, {
             method: "POST",
             headers: {

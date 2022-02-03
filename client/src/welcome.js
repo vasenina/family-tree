@@ -9,9 +9,9 @@ export default function Welcome() {
     const [submit, error] = useFormSubmit("/login.json", values, fieldNames);
     return (
         <div className="welcome-container">
-            <h1>All Your Family here</h1>
+            <h1>Your Family is already here</h1>
             {error && <h2 className="error">{error}</h2>}
-            <form>
+            <form className="center_form">
                 <InputField
                     label="Email"
                     name="email"
@@ -24,8 +24,8 @@ export default function Welcome() {
                     type="password"
                     onChange={handleChange}
                 />
-                <button onClick={submit} className="btn-primary">
-                    See my Family
+                <button onClick={submit} className="btn-primary login-btn">
+                    See the family
                 </button>
             </form>
         </div>

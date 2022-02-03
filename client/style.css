@@ -194,6 +194,14 @@ body {
 .add-member-container {
     display: flex;
     column-gap: var(--offset-2);
+    width: 60%;
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding-left: 100px;
 }
 
 .line {
@@ -212,7 +220,7 @@ body {
 
     display: grid;
     grid-template-columns: 350px 1fr;
-    grid-template-rows: 200px 300px;
+    grid-template-rows: 250px 250px;
 
     height: 100%;
     grid-template-areas:
@@ -249,7 +257,7 @@ body {
     z-index: 3;
     position: absolute;
     bottom: 0;
-    right: 0;
+    left: 0;
 }
 
 .edit-member-btn {
@@ -262,7 +270,7 @@ body {
 
 .relatives-container {
     /* background-color: var(--yellow-color); */
-    padding: 25px 0;
+    /* padding: 25px 0; */
     /* width: 50%; */
     position: relative;
 }
@@ -285,7 +293,7 @@ body {
 }
 
 .relative-end {
-    height: 200px;
+    height: 225px;
     width: 60%;
     position: absolute;
     left: 50px;
@@ -339,7 +347,9 @@ body {
     font-weight: 600;
 }
 .bio-text {
-    margin-bottom: var(--offset);
+    margin-bottom: var(--offset-2);
+    width: 80%;
+    text-align: center;
 }
 
 .bio-editor-container {
@@ -352,10 +362,15 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 500px;
 }
 .bio-editor-textarea {
     margin: var(--offset-2);
-    width: 60%;
+    width: 50%;
+}
+
+.add-member-bio {
+    width: 90%;
 }
 /* modal */
 
@@ -388,5 +403,35 @@ body {
 /* wall-container */
 .wall-container {
     background-color: var(--yellow-color);
+
     /* grid-area: wall; */
+}
+
+/* welcome-container" */
+.welcome-container {
+    background-color: var(--yellow-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    padding-top: 100px;
+}
+
+.welcome-container h1 {
+    margin-bottom: var(--offset-4);
+}
+
+.center-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-btn {
+    margin-top: var(--offset-4);
+    width: 100%;
+    font-size: 24px;
+}
+.error {
+    color: red;
 }

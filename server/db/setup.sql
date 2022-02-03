@@ -58,7 +58,3 @@ CREATE TABLE wall_messages(
 
 
 
-
-
-
-

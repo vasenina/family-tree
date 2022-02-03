@@ -86,7 +86,7 @@ export default function AddMember({}) {
 
     return (
         <div>
-            <form className="add-member-container">
+            <form className="add-member-container ">
                 <div>
                     <div>
                         <MemberPic size="big" />
@@ -98,64 +98,66 @@ export default function AddMember({}) {
                         onChange={getPhoto}
                     />
                     <InputField
-                        label="image_url"
+                        label="Image URL"
                         name="image_url"
                         type="text"
                         onChange={handleChange}
                     />
                 </div>
-                <div className="bio-container">
-                    <div className="line">
-                        <InputField
-                            label="first"
-                            name="first"
-                            type="text"
+                <div className=" flex-center">
+                    <div className="bio-container">
+                        <div className="line">
+                            <InputField
+                                label="First Name"
+                                name="first"
+                                type="text"
+                                onChange={handleChange}
+                            />
+                            <InputField
+                                label="Last Name"
+                                name="last"
+                                type="text"
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="line">
+                            <InputField
+                                label="Birth"
+                                name="birth"
+                                type="date"
+                                onChange={handleChange}
+                            />
+                            <InputField
+                                label="Death"
+                                name="death"
+                                type="date"
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="line">
+                            <InputField
+                                label="City"
+                                name="city"
+                                type="text"
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <textarea
+                            defaultValue={""}
+                            name="bio"
+                            rows="4"
+                            className="bio-editor-textarea add-member-bio"
+                            maxLength="300"
                             onChange={handleChange}
                         />
-                        <InputField
-                            label="last"
-                            name="last"
-                            type="text"
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <div className="line">
-                        <InputField
-                            label="birth"
-                            name="birth"
-                            type="date"
-                            onChange={handleChange}
-                        />
-                        <InputField
-                            label="death"
-                            name="death"
-                            type="date"
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <div className="line">
-                        <InputField
-                            label="city"
-                            name="city"
-                            type="text"
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <textarea
-                        defaultValue={""}
-                        name="bio"
-                        rows="4"
-                        className="bio-editor-textarea"
-                        maxLength="300"
-                        onChange={handleChange}
-                    />
 
-                    <button
-                        onClick={addMemberClick}
-                        className="btn-primary add-member-btn "
-                    >
-                        Add Member
-                    </button>
+                        <button
+                            onClick={addMemberClick}
+                            className="btn-primary add-member-btn "
+                        >
+                            Add Member
+                        </button>
+                    </div>
                 </div>
             </form>
             <></>
