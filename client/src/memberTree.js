@@ -24,6 +24,7 @@ export default function MemberTree() {
                 id: member.id,
                 label: `${member.first} ${member.last}`,
                 image: member.image_url || "/default-member.png",
+                hidden: false,
             };
         });
     });
@@ -31,9 +32,27 @@ export default function MemberTree() {
 
     useEffect(() => {
         if (family?.length > 0) {
-            setEdges(generateEdges(family, id));
+            const result = generateEdges(family, id);
+            console.log("NEW RESULT", result);
+
+            setEdges(result.edges);
+            setTestUsers(generateMemberNodes(result.memberList));
+            setGraph({
+                nodes: generateMemberNodes(result.memberList),
+                edges: result.edges,
+            });
         }
     }, [family]);
+
+    const [testUsers, setTestUsers] = useState();
+    const [graph, setGraph] = useState();
+
+    // useEffect(() => {
+    //     if (family?.length > 0) {
+    //         // setTestUsers(selectTreeUsers(users));
+    //     }
+    // }, [users]);
+
     // useEffect(() => {
     //     console.log("NEt useEffect");
     //     fetch("/api/relations")
@@ -56,10 +75,10 @@ export default function MemberTree() {
 
     console.log("Net users", users);
     console.log("Net edges", edges);
-    const graph = {
-        nodes: users,
-        edges: edges,
-    };
+    // const graph = {
+    //     nodes: testUsers,
+    //     edges: edges,
+    // };
 
     console.log("GRAPH", graph);
 
@@ -123,13 +142,27 @@ export default function MemberTree() {
         },
     };
     return (
-        <Graph
-            graph={graph}
-            options={options}
-            events={events}
-            getNetwork={(network) => {}}
-        />
+        <>
+            {graph && (
+                <Graph
+                    graph={graph}
+                    options={options}
+                    events={events}
+                    getNetwork={(network) => {}}
+                />
+            )}
+        </>
     );
+}
+function generateMemberNodes(memberList) {
+    return memberList?.map((member) => {
+        return {
+            id: member.id,
+            label: `${member.first} ${member.last}`,
+            image: member.image_url || "/default-member.png",
+            hidden: false,
+        };
+    });
 }
 
 function makeFamilyDictionary(family) {
@@ -139,6 +172,7 @@ function makeFamilyDictionary(family) {
             id: family[i].id,
             last: family[i].last,
             first: family[i].first,
+            image_url: family[i].image_url,
             child: family[i].child ? [...family[i].child] : null,
             parent: family[i].parent ? [...family[i].parent] : null,
         };
@@ -150,26 +184,31 @@ function generateEdges(family, member_id) {
     console.log("Relations", family);
     const familyDict = makeFamilyDictionary(family);
     console.log("Dictionary", familyDict);
+    let memberList = [];
     const edges = [
-        ...deapSearchParents(familyDict, member_id),
-        ...deapSearchChildren(familyDict, member_id),
+        ...deapSearchParents(familyDict, member_id, memberList),
+        ...deapSearchChildren(familyDict, member_id, memberList),
     ];
+
+    // selectTreeUsers(users);
     console.log(edges);
 
-    return edges;
+    return { edges, memberList };
 }
 
-function deapSearchParents(dictionary, id) {
+function deapSearchParents(dictionary, id, memberList) {
     console.log("DEAP Search");
     let edgesArr = [];
     let queue = [];
     console.log("deapSearch");
     queue.push(dictionary[id]);
+    memberList.push(dictionary[id]);
     while (queue.length > 0) {
         let current = queue.shift();
         if (current.parent?.length > 0) {
             for (let parent of current.parent) {
                 queue.push(dictionary[parent]);
+                memberList.push(dictionary[parent]);
                 edgesArr.push({ from: parent, to: current.id });
                 // console.log("EDGES ARR", edgesArr);
             }
@@ -179,7 +218,7 @@ function deapSearchParents(dictionary, id) {
     return edgesArr;
 }
 
-function deapSearchChildren(dictionary, id) {
+function deapSearchChildren(dictionary, id, memberList) {
     console.log("DEAP Search");
     let edgesArr = [];
     let queue = [];
@@ -190,6 +229,7 @@ function deapSearchChildren(dictionary, id) {
         if (current.child?.length > 0) {
             for (let child of current.child) {
                 queue.push(dictionary[child]);
+                memberList.push(dictionary[child]);
                 edgesArr.push({ from: current.id, to: child });
                 // console.log("EDGES ARR", edgesArr);
             }
