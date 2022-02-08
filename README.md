@@ -16,10 +16,10 @@ React, Redux, Router, CSS,  MongoDB, NodeJs, Express, AWS
 ## How to use
 
 ## To do
-[] transfer to MongoDB
-[] add animations(Spring?)
-[] responsiveness for small screens
-[] add photo galery in member View
-[] firebase? AWS?
+- [] transfer to MongoDB
+- [] add animations(Spring?)
+- [] responsiveness for small screens
+- [] add photo galery in member View
+- [] firebase? AWS?
 
 
