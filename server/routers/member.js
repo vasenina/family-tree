@@ -142,4 +142,10 @@ member.post("/api/add-relation", async (req, res) => {
     }
 });
 
+member.get("/api/get-wall/:id", async (req, res) => {
+    console.log("user wants to see a wall", req.params.id);
+    res.json({ success: true, wall: ["first", "second"] });
+    return;
+});
+
 module.exports.member = member;

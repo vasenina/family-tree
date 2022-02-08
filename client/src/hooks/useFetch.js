@@ -1,6 +1,6 @@
-export { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
-export default function useFormSubmit(url) {
+export default function useFetch(url) {
     const [data, setData] = useState({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState();
@@ -10,6 +10,7 @@ export default function useFormSubmit(url) {
         fetch(url)
             .then((res) => res.json())
             .then((data) => {
+                //console.log("usefetch data", data);
                 setData(data);
                 setLoading(false);
             })

@@ -38,7 +38,6 @@ export default function viewMember({}) {
     //console.log(memberPhoto);
     const toggleUploader = () => {
         const toggle = !photoUploaderToggler;
-        //console.log(uploader);
         setPhotoUploaderToggler(toggle);
     };
 
@@ -175,7 +174,7 @@ export default function viewMember({}) {
                             />
                         </div>
                     </div>
-                    <MemberWall />
+                    <MemberWall id={member.id} />
                 </div>
             )}
             {addRelativesIsVisible && (
