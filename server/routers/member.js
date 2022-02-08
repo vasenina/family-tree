@@ -9,6 +9,8 @@ const multer = require("multer");
 const uidSafe = require("uid-safe");
 const path = require("path");
 
+const mongoosedb = require("../mongo/mongoose");
+
 const diskStorage = multer.diskStorage({
     destination: function (req, file, callback) {
         callback(null, path.join(__dirname, "uploads"));
@@ -25,6 +27,13 @@ const uploader = multer({
     limits: {
         fileSize: 2097152,
     },
+});
+
+member.get("/mongomembers", async (req, res) => {
+    console.log("mongomembers");
+    const family = await mongoosedb.getFamily();
+    console.log("got this from mongo", family);
+    return res.sendStatus(200);
 });
 
 member.post("/api/add-member", async (req, res) => {
