@@ -21,5 +21,6 @@ React, Redux, Router, CSS,  MongoDB, NodeJs, Express, AWS
 - [ ] responsiveness for small screens
 - [ ] add photo galery in member View
 - [ ] firebase? AWS?
+- [ ] add unit tests
 
 
