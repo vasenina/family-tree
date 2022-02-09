@@ -40,5 +40,19 @@ const memberSchema = new mongoose.Schema({
     other: [mongoose.Schema.Types.ObjectId],
 });
 
+// Duplicate the ID field.
+memberSchema.virtual("id").get(function () {
+    return this._id.toHexString();
+});
+
+// Ensure virtual fields are serialised.
+memberSchema.set("toJSON", {
+    virtuals: true,
+    versionKey: false,
+    transform: function (doc, ret) {
+        delete ret._id;
+    },
+});
+
 const MemberModel = mongoose.model("Member", memberSchema);
 module.exports = MemberModel;

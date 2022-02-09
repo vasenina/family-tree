@@ -1,7 +1,8 @@
-//import { Component } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import Header from "./header";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+
+import useFetch from "./hooks/useFetch";
 import Family from "./allFamily";
 import AddMember from "./member-page/addMember";
 import ViewMember from "./member-page/viewMember";
@@ -13,32 +14,21 @@ import { receiveFamily } from "./redux/familyTree/slice.js";
 
 export default function App() {
     const dispatch = useDispatch();
-
-    // const family = useSelector((state) => {
-    //     return state.familyTree;
-    // });
-    // console.log(family);
+    const { data, loading, error } = useFetch(`/get-family`);
 
     useEffect(() => {
-        fetch("/family")
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-                if (data.success) {
-                    dispatch(receiveFamily(data.family));
-                }
-            })
-            .catch((err) => {
-                console.log("error in fetch", err);
-            });
-    }, []);
+        if (data.success) {
+            dispatch(receiveFamily(data.family));
+        }
+    }, [data]);
+
     return (
         <>
             <Header />
             <div className="main-body">
                 <BrowserRouter>
                     <Route exact path="/">
-                        <Family />
+                        <Family loading={loading} error={error} />
                     </Route>
 
                     <Route path="/add-member">

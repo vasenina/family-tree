@@ -21,6 +21,6 @@ mongoose
 
 module.exports.getFamily = () => {
     return MemberModel.find({}).select(
-        "first last image_url parent sibling spouse child other"
+        "id first last image_url parent sibling spouse child other"
     );
 };

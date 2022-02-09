@@ -8,6 +8,7 @@ const cookieSession = require("cookie-session");
 
 const { member } = require("./routers/member.js");
 const { auth } = require("./routers/auth.js");
+const { family } = require("./routers/family.js");
 
 app.use(compression());
 
@@ -29,6 +30,7 @@ app.use(express.json());
 
 app.use(member);
 app.use(auth);
+app.use(family);
 
 app.get("/clear", (req, res) => {
     req.session = null;
@@ -38,7 +40,7 @@ app.get("/clear", (req, res) => {
 });
 
 app.get("/user-cookie/id.json", function (req, res) {
-    // req.session.userId = 1;
+    req.session.userId = 1;
     res.json({
         userId: req.session.userId,
         //last: req.session.last,
@@ -46,95 +48,95 @@ app.get("/user-cookie/id.json", function (req, res) {
     });
 });
 
-function generateFamily(family, relations) {
-    //console.log("relations", relations);
-    let newFamily = family.map((member) => {
-        let newMember = {};
-        const id = member.id;
+// function generateFamily(family, relations) {
+//     //console.log("relations", relations);
+//     let newFamily = family.map((member) => {
+//         let newMember = {};
+//         const id = member.id;
 
-        const relationForThisId = relations.filter((relation) => {
-            if (relation.member_id === id || relation.relative_id === id) {
-                return relation;
-            }
-        });
+//         const relationForThisId = relations.filter((relation) => {
+//             if (relation.member_id === id || relation.relative_id === id) {
+//                 return relation;
+//             }
+//         });
 
-        for (let i = 0; i < relationForThisId.length; i++) {
-            const relative_id =
-                relationForThisId[i].member_id === id
-                    ? relationForThisId[i].relative_id
-                    : relationForThisId[i].member_id;
-            if (relationForThisId[i].type === "spouse") {
-                if (newMember.spouse) {
-                    newMember.spouse.push(relative_id);
-                } else {
-                    newMember.spouse = [relative_id];
-                }
-            } else if (relationForThisId[i].type === "sibling") {
-                if (newMember.sibling) {
-                    newMember.sibling.push(relative_id);
-                } else {
-                    newMember.sibling = [relative_id];
-                }
-            } else if (relationForThisId[i].type === "other") {
-                if (newMember.other) {
-                    newMember.other.push(relative_id);
-                } else {
-                    newMember.other = [relative_id];
-                }
-            } else if (relationForThisId[i].type === "parent") {
-                if (relationForThisId[i].member_id === id) {
-                    if (newMember.child) {
-                        newMember.child.push(relative_id);
-                    } else {
-                        newMember.child = [relative_id];
-                    }
-                } else {
-                    if (newMember.parent) {
-                        newMember.parent.push(relative_id);
-                    } else {
-                        newMember.parent = [relative_id];
-                    }
-                }
-            } else if (relationForThisId[i].type === "child") {
-                if (relationForThisId[i].member_id === id) {
-                    if (newMember.parent) {
-                        newMember.parent.push(relative_id);
-                    } else {
-                        newMember.parent = [relative_id];
-                    }
-                } else {
-                    if (newMember.child) {
-                        newMember.child.push(relative_id);
-                    } else {
-                        newMember.child = [relative_id];
-                    }
-                }
-            }
-            //parents, child, other, sibling
-        }
+//         for (let i = 0; i < relationForThisId.length; i++) {
+//             const relative_id =
+//                 relationForThisId[i].member_id === id
+//                     ? relationForThisId[i].relative_id
+//                     : relationForThisId[i].member_id;
+//             if (relationForThisId[i].type === "spouse") {
+//                 if (newMember.spouse) {
+//                     newMember.spouse.push(relative_id);
+//                 } else {
+//                     newMember.spouse = [relative_id];
+//                 }
+//             } else if (relationForThisId[i].type === "sibling") {
+//                 if (newMember.sibling) {
+//                     newMember.sibling.push(relative_id);
+//                 } else {
+//                     newMember.sibling = [relative_id];
+//                 }
+//             } else if (relationForThisId[i].type === "other") {
+//                 if (newMember.other) {
+//                     newMember.other.push(relative_id);
+//                 } else {
+//                     newMember.other = [relative_id];
+//                 }
+//             } else if (relationForThisId[i].type === "parent") {
+//                 if (relationForThisId[i].member_id === id) {
+//                     if (newMember.child) {
+//                         newMember.child.push(relative_id);
+//                     } else {
+//                         newMember.child = [relative_id];
+//                     }
+//                 } else {
+//                     if (newMember.parent) {
+//                         newMember.parent.push(relative_id);
+//                     } else {
+//                         newMember.parent = [relative_id];
+//                     }
+//                 }
+//             } else if (relationForThisId[i].type === "child") {
+//                 if (relationForThisId[i].member_id === id) {
+//                     if (newMember.parent) {
+//                         newMember.parent.push(relative_id);
+//                     } else {
+//                         newMember.parent = [relative_id];
+//                     }
+//                 } else {
+//                     if (newMember.child) {
+//                         newMember.child.push(relative_id);
+//                     } else {
+//                         newMember.child = [relative_id];
+//                     }
+//                 }
+//             }
+//             //parents, child, other, sibling
+//         }
 
-        newMember = { ...member, ...newMember };
-        return newMember;
-    });
-    return newFamily;
-}
+//         newMember = { ...member, ...newMember };
+//         return newMember;
+//     });
+//     return newFamily;
+// }
 
-app.get("/family", async (req, res) => {
-    console.log("User want to see all family");
-    try {
-        const family = db.getAll();
-        const relations = db.getAllRelations();
-        Promise.all([family, relations]).then((values) => {
-            const newFamily = generateFamily(values[0].rows, values[1].rows);
-            res.json({ success: true, family: newFamily });
-            return;
-        });
-    } catch (err) {
-        console.log("error im GET family", err);
-        res.status(500).json({ success: false });
-        return;
-    }
-});
+// app.get("/family", async (req, res) => {
+//     console.log("User want to see all family");
+//     try {
+//         const family = db.getAll();
+//         const relations = db.getAllRelations();
+//         Promise.all([family, relations]).then((values) => {
+//             const newFamily = generateFamily(values[0].rows, values[1].rows);
+//             res.json({ success: true, family: newFamily });
+//             return;
+//         });
+//     } catch (err) {
+//         console.log("error im GET family", err);
+//         res.status(500).json({ success: false });
+//         return;
+//     }
+// });
 
 app.get("/api/relations", async (req, res) => {
     console.log("user wants to get relations");
