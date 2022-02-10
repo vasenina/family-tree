@@ -15,7 +15,7 @@ export default function BioEditor({ member, close, bioChanger }) {
             return;
         }
         fetch(`/api/update-bio/${member.id}`, {
-            method: "POST",
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },

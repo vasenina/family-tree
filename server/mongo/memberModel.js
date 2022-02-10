@@ -54,5 +54,13 @@ memberSchema.set("toJSON", {
     },
 });
 
+memberSchema.methods.addRelative = function (type, relative) {
+    //console.log(dogs); // woof
+
+    this[type].push(relative);
+    return this.save();
+};
+
 const MemberModel = mongoose.model("Member", memberSchema);
+
 module.exports = MemberModel;

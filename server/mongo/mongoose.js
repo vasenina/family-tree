@@ -24,3 +24,41 @@ module.exports.getFamily = () => {
         "id first last image_url parent sibling spouse child other"
     );
 };
+
+module.exports.addNewMember = (member) => {
+    // console.log(me)
+    return new MemberModel(member).save();
+};
+
+module.exports.getMemberById = (id) => {
+    return MemberModel.findById(id);
+};
+
+module.exports.updateMemberBio = (id, newBio) => {
+    return MemberModel.findByIdAndUpdate(id, newBio);
+};
+
+module.exports.changeMemberPhoto = (id, url) => {
+    return MemberModel.findByIdAndUpdate(id, { image_url: url });
+};
+
+module.exports.addRelation = async (id, type, relative_id) => {
+    //add relationship to member and his relative
+    if (type == "spouse" || type == "sibling" || type == "other") {
+        const foundMember = await MemberModel.findOne({ _id: id });
+        await foundMember.addRelative(type, relative_id);
+        const foundRelative = await MemberModel.findById(relative_id);
+        await foundRelative.addRelative(type, id);
+    } else if (type == "parent") {
+        const foundMember = await MemberModel.findOne({ _id: id });
+        await foundMember.addRelative(type, relative_id);
+        const foundRelative = await MemberModel.findById(relative_id);
+        await foundRelative.addRelative("child", id);
+    } else if (type == "child") {
+        const foundMember = await MemberModel.findOne({ _id: id });
+        await foundMember.addRelative(type, relative_id);
+        const foundRelative = await MemberModel.findById(relative_id);
+        await foundRelative.addRelative("parent", id);
+    }
+    return;
+};

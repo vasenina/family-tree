@@ -29,22 +29,14 @@ const uploader = multer({
     },
 });
 
-member.get("/mongomembers", async (req, res) => {
-    console.log("mongomembers");
-    const family = await mongoosedb.getFamily();
-    console.log("got this from mongo", family);
-    return res.sendStatus(200);
-});
-
 member.post("/api/add-member", async (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     let newMember = req.body;
     console.log("user wants to add this", newMember);
     try {
-        const addedMember = await db.addMember(newMember);
-        newMember.id = addedMember.rows[0].id;
-        console.log("new Member", newMember);
-
+        const addedMember = await mongoosedb.addNewMember(newMember);
+        newMember.id = addedMember.id;
+        // console.log("new Member", newMember);
         res.send({ success: true, newMember: newMember });
         return;
     } catch (err) {
@@ -69,8 +61,8 @@ member.post(
             let newMember = { ...req.body, image_url: url };
             console.log("new member with photo", newMember);
             try {
-                const member_id = await db.addMember(newMember);
-                newMember.id = member_id.rows[0].id;
+                const member_id = await mongoosedb.addNewMember(newMember);
+                newMember.id = member_id.id;
                 console.log("added new member with photo", newMember);
                 res.json({ success: true, newMember: newMember });
                 // res.send({ success: true });
@@ -87,8 +79,8 @@ member.post(
 member.get("/api/member/:id", async (req, res) => {
     console.log("Get member info", req.params.id);
     try {
-        const member = await db.getMemberInfoById(req.params.id);
-        res.json({ success: true, member: member.rows[0] });
+        const member = await mongoosedb.getMemberById(req.params.id);
+        res.json({ success: true, member: member });
         return;
     } catch (err) {
         console.log("error in get member by id", err);
@@ -109,11 +101,9 @@ member.post(
             return;
         } else {
             const url = s3.getLink(req.file.filename);
-            console.log(req.body);
-            //let newMember = { ...req.body, image_url: url };
-            //console.log("new member with photo", newMember);
+            // console.log(req.body);
             try {
-                await db.changeMemberPhoto(id, url);
+                await mongoosedb.changeMemberPhoto(id, url);
                 // newMember.id = member_id;
                 res.json({ success: true, url: url });
                 return;
@@ -125,11 +115,11 @@ member.post(
         }
     }
 );
-
-member.post("/api/update-bio/:id", async (req, res) => {
+//with mongo
+member.put("/api/update-bio/:id", async (req, res) => {
     console.log("user wants to update bio", req.body, req.params.id);
     try {
-        await db.updateMemberBio(req.body, req.params.id);
+        await mongoosedb.updateMemberBio(req.params.id, req.body);
         res.json({ success: true });
         return;
     } catch (err) {
@@ -139,18 +129,19 @@ member.post("/api/update-bio/:id", async (req, res) => {
     }
 });
 
-member.post("/api/add-relation", async (req, res) => {
+//with mongo
+member.put("/api/add-relation", async (req, res) => {
     console.log("user wants to add relation", req.body);
     const { member_id, relative_id, type } = req.body;
     try {
-        await db.addRelation(member_id, relative_id, type);
+        await mongoosedb.addRelation(member_id, type, relative_id);
         res.json({ success: true });
     } catch (err) {
         console.log(err);
         res.json({ success: false });
     }
 });
-
+//to-do change it when add a wall
 member.get("/api/get-wall/:id", async (req, res) => {
     console.log("user wants to see a wall", req.params.id);
     res.json({ success: true, wall: ["first", "second"] });

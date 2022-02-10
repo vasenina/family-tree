@@ -3,6 +3,7 @@ const auth = express.Router();
 const db = require("../db/db");
 const { hash, compare } = require("../bc");
 
+//to do with mongo
 auth.post("/login.json", (req, res) => {
     console.log("login", req.body);
     if (!req.body.password || !req.body.email) {

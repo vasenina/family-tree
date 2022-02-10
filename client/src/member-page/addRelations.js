@@ -59,7 +59,7 @@ export default function AddRelations({ id, close, type }) {
         };
         console.log("newRelation", newRelation);
         fetch("/api/add-relation", {
-            method: "POST",
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
