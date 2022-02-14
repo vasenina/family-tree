@@ -26,6 +26,7 @@ const memberSchema = new mongoose.Schema({
     },
     gender: {
         type: String,
+        enum: ["male", "female"],
     },
     city: {
         type: String,
@@ -38,6 +39,14 @@ const memberSchema = new mongoose.Schema({
     sibling: [mongoose.Schema.Types.ObjectId],
     spouse: [mongoose.Schema.Types.ObjectId],
     other: [mongoose.Schema.Types.ObjectId],
+    wall: [
+        {
+            id: { type: mongoose.Schema.Types.ObjectId },
+            sender_id: { type: mongoose.Schema.Types.ObjectId },
+            message: { type: String, maxLength: 200 },
+            date: { type: Date, default: Date.now },
+        },
+    ],
 });
 
 // Duplicate the ID field.

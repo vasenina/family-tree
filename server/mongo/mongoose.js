@@ -35,11 +35,15 @@ module.exports.getMemberById = (id) => {
 };
 
 module.exports.updateMemberBio = (id, newBio) => {
-    return MemberModel.findByIdAndUpdate(id, newBio);
+    return MemberModel.findByIdAndUpdate(id, newBio, { runValidators: true });
 };
 
 module.exports.changeMemberPhoto = (id, url) => {
-    return MemberModel.findByIdAndUpdate(id, { image_url: url });
+    return MemberModel.findByIdAndUpdate(
+        id,
+        { image_url: url },
+        { runValidators: true }
+    );
 };
 
 module.exports.addRelation = async (id, type, relative_id) => {
