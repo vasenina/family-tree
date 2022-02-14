@@ -66,3 +66,11 @@ module.exports.addRelation = async (id, type, relative_id) => {
     }
     return;
 };
+
+module.exports.addNewMemory = async (id, memory, sender_id) => {
+    const foundWallOwner = await MemberModel.findById(id);
+    return foundWallOwner.addNewMemoryToWall({
+        sender_id,
+        memory_text: memory,
+    });
+};

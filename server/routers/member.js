@@ -136,16 +136,34 @@ member.put("/api/add-relation", async (req, res) => {
     try {
         await mongoosedb.addRelation(member_id, type, relative_id);
         res.json({ success: true });
+        return;
     } catch (err) {
         console.log(err);
         res.json({ success: false });
+        return;
     }
 });
 //to-do change it when add a wall
-member.get("/api/get-wall/:id", async (req, res) => {
+member.get("/api/wall/:id", async (req, res) => {
     console.log("user wants to see a wall", req.params.id);
     res.json({ success: true, wall: ["first", "second"] });
     return;
+});
+member.post("/api/wall/:id/new-post", async (req, res) => {
+    console.log("user wants to add new memory", req.body);
+    const { memory } = req.body;
+    const { id } = req.params;
+    const sender_id = req.session.userId;
+    try {
+        const newMemory = await mongoosedb.addNewMemory(id, memory, sender_id);
+        console.log(newMemory);
+        res.json({ success: true, newMemory });
+        return;
+    } catch (err) {
+        console.log("new post did not add", err);
+        res.json({ success: false });
+        return;
+    }
 });
 
 module.exports.member = member;

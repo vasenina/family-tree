@@ -43,7 +43,7 @@ const memberSchema = new mongoose.Schema({
         {
             id: { type: mongoose.Schema.Types.ObjectId },
             sender_id: { type: mongoose.Schema.Types.ObjectId },
-            message: { type: String, maxLength: 200 },
+            memory_text: { type: String, maxLength: 200 },
             date: { type: Date, default: Date.now },
         },
     ],
@@ -64,9 +64,12 @@ memberSchema.set("toJSON", {
 });
 
 memberSchema.methods.addRelative = function (type, relative) {
-    //console.log(dogs); // woof
-
     this[type].push(relative);
+    return this.save();
+};
+
+memberSchema.methods.addNewMemoryToWall = function (memory) {
+    this.wall.push(memory);
     return this.save();
 };
 
