@@ -42,7 +42,7 @@ const memberSchema = new mongoose.Schema({
     wall: [
         {
             id: { type: mongoose.Schema.Types.ObjectId },
-            sender_id: { type: mongoose.Schema.Types.ObjectId },
+            sender_id: { type: mongoose.Schema.Types.ObjectId, ref: "sender" },
             memory_text: { type: String, maxLength: 200 },
             date: { type: Date, default: Date.now },
         },

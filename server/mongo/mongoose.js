@@ -67,6 +67,15 @@ module.exports.addRelation = async (id, type, relative_id) => {
     return;
 };
 
+module.exports.getWallMemories = async (member_id) => {
+    console.log("get a wall for this user", member_id);
+    return MemberModel.findById(member_id).select("wall").populate({
+        path: "wall.sender_id",
+        model: "Member",
+        select: "last first",
+    });
+};
+
 module.exports.addNewMemory = async (id, memory, sender_id) => {
     const foundWallOwner = await MemberModel.findById(id);
     return foundWallOwner.addNewMemoryToWall({

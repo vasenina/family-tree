@@ -1,10 +1,8 @@
 const express = require("express");
 const member = express.Router();
 
-const db = require("../db/db");
-
+//const db = require("../db/db");
 const s3 = require("../s3");
-
 const multer = require("multer");
 const uidSafe = require("uid-safe");
 const path = require("path");
@@ -145,22 +143,31 @@ member.put("/api/add-relation", async (req, res) => {
 });
 //to-do change it when add a wall
 member.get("/api/wall/:id", async (req, res) => {
-    console.log("user wants to see a wall", req.params.id);
-    res.json({ success: true, wall: ["first", "second"] });
-    return;
+    const { id } = req.params;
+    console.log("user wants to see a wall", id);
+
+    const memories = await mongoosedb.getWallMemories(id);
+    console.log("messages for this wall", memories);
+    if (memories.wall) {
+        res.json({ success: true, wall: memories.wall });
+        return;
+    } else {
+        res.json({ success: true, wall: [] });
+        return;
+    }
 });
-member.post("/api/wall/:id/new-post", async (req, res) => {
+member.post("/api/wall/:id", async (req, res) => {
     console.log("user wants to add new memory", req.body);
     const { memory } = req.body;
     const { id } = req.params;
     const sender_id = req.session.userId;
     try {
         const newMemory = await mongoosedb.addNewMemory(id, memory, sender_id);
-        console.log(newMemory);
+        //console.log("messages", newMemory.wall);
         res.json({ success: true, newMemory });
         return;
     } catch (err) {
-        console.log("new post did not add", err);
+        //console.log("new post did not add", err);
         res.json({ success: false });
         return;
     }

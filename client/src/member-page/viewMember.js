@@ -174,7 +174,7 @@ export default function viewMember({}) {
                             />
                         </div>
                     </div>
-                    <MemberWall id={member.id} />
+                    <MemberWall id={id} />
                 </div>
             )}
             {addRelativesIsVisible && (

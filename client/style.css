@@ -407,6 +407,23 @@ body {
     /* grid-area: wall; */
 }
 
+.wall-memory-form {
+    display: flex;
+    padding: var(--offset);
+    gap: var(--offset);
+}
+
+.wall-textarea {
+    width: 70%;
+}
+
+.memory-container {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    padding: var(--offset-2);
+}
+
 /* welcome-container" */
 .welcome-container {
     background-color: var(--yellow-color);
