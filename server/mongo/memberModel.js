@@ -1,4 +1,11 @@
 const mongoose = require("mongoose");
+//const { memorySchema } = require("./memoryModel");
+
+const memorySchema = new mongoose.Schema({
+    sender_id: { type: mongoose.Schema.Types.ObjectId, ref: "sender" },
+    memory_text: { type: String, axLength: 200 },
+    date: { type: Date, default: Date.now },
+});
 
 const memberSchema = new mongoose.Schema({
     first: {
@@ -39,14 +46,7 @@ const memberSchema = new mongoose.Schema({
     sibling: [mongoose.Schema.Types.ObjectId],
     spouse: [mongoose.Schema.Types.ObjectId],
     other: [mongoose.Schema.Types.ObjectId],
-    wall: [
-        {
-            id: { type: mongoose.Schema.Types.ObjectId },
-            sender_id: { type: mongoose.Schema.Types.ObjectId, ref: "sender" },
-            memory_text: { type: String, maxLength: 200 },
-            date: { type: Date, default: Date.now },
-        },
-    ],
+    wall: [memorySchema],
 });
 
 // Duplicate the ID field.
@@ -68,9 +68,19 @@ memberSchema.methods.addRelative = function (type, relative) {
     return this.save();
 };
 
-memberSchema.methods.addNewMemoryToWall = function (memory) {
-    this.wall.push(memory);
-    return this.save();
+memberSchema.methods.addNewMemoryToWall = async function (memory) {
+    this.wall.unshift(memory);
+    //console.log("new Memory", memory);
+
+    const newMemory = this.wall[0];
+    // console.log("addedsubdoc", newMemory);
+    await this.save((err) => {
+        if (err) {
+            console.log("error in save", err);
+            return null;
+        }
+    });
+    return newMemory;
 };
 
 const MemberModel = mongoose.model("Member", memberSchema);

@@ -161,16 +161,18 @@ member.post("/api/wall/:id", async (req, res) => {
     const { memory } = req.body;
     const { id } = req.params;
     const sender_id = req.session.userId;
-    try {
-        const newMemory = await mongoosedb.addNewMemory(id, memory, sender_id);
-        //console.log("messages", newMemory.wall);
-        res.json({ success: true, newMemory });
-        return;
-    } catch (err) {
-        //console.log("new post did not add", err);
-        res.json({ success: false });
-        return;
-    }
+    mongoosedb
+        .addNewMemory(id, memory, sender_id)
+        .then((newMemory) => {
+            console.log("result on server", newMemory);
+            res.json({ success: true, newMemory });
+            return;
+        })
+        .catch((err) => {
+            console.log(err);
+            res.json({ success: false });
+            return;
+        });
 });
 
 module.exports.member = member;

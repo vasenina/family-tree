@@ -1,13 +1,23 @@
 import useFetch from "../hooks/useFetch";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 
 import useTextInput from "../hooks/useTextInput";
-import MemberPic from "../ui/memberPic";
 
 export default function MemberWall({ id }) {
     const { data, loading, error } = useFetch(`/api/wall/${id}`);
     const [values, handleChange] = useTextInput();
+    const [memories, setMemories] = useState();
+    const [sender, setSender] = useState({
+        last: "Peter",
+        first: "Mayo",
+        id: "620ec9a86a5c018402847b01",
+    });
+    const textAreValueRef = useRef();
+
+    useEffect(() => {
+        setMemories(data.wall);
+    }, [data]);
 
     const showWall = () => {
         if (loading) return <>Loading....</>;
@@ -16,8 +26,8 @@ export default function MemberWall({ id }) {
         if (data.success)
             return (
                 <>
-                    {data.wall &&
-                        data.wall.map((m) => {
+                    {memories &&
+                        memories.map((m) => {
                             return (
                                 <div className="memory-container" key={m._id}>
                                     {m.memory_text}
@@ -51,6 +61,15 @@ export default function MemberWall({ id }) {
                 //console.log(data);
                 if (data.success) {
                     console.log(data);
+                    const addedMemory = {
+                        ...data.newMemory,
+                        sender_id: sender,
+                    };
+
+                    setMemories([addedMemory, ...memories]);
+                    textAreValueRef.current.value = "";
+
+                    //clear fields
                 }
             })
             .catch((err) => {
@@ -69,6 +88,7 @@ export default function MemberWall({ id }) {
                     className="wall-textarea"
                     maxLength="300"
                     onChange={handleChange}
+                    ref={textAreValueRef}
                 />
                 <button onClick={addNewMemory} className="btn-primary">
                     Add Memory

@@ -40,7 +40,7 @@ app.get("/clear", (req, res) => {
 });
 
 app.get("/user-cookie/id.json", function (req, res) {
-    req.session.userId = "6202ede11e18a0e1f4564075";
+    req.session.userId = "620ec9a86a5c018402847b01";
     res.json({
         userId: req.session.userId,
         //last: req.session.last,
