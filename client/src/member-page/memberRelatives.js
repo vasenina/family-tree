@@ -105,7 +105,6 @@ export default function MemberRelatives({ id, addRelations }) {
                 {returnRelativesList(spouse, "spouse")}
                 {/* {returnRelativesList(other, "other")} */}
             </div>
-            <div className="relative-end"></div>
         </div>
     );
 }

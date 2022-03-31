@@ -149,7 +149,7 @@ export default function viewMember({}) {
                                     <p className="date-text">--/--/----</p>
                                 )}
 
-                                <p className="date-text"> - </p>
+                                <p className="date-text">{"  -  "}</p>
                                 {member.death && (
                                     <DayJS
                                         format="DD MMM YYYY"
