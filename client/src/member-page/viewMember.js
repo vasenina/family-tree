@@ -97,10 +97,10 @@ export default function viewMember({}) {
                                     "/default-member-big.png"
                                 }
                                 alt={`photo of ${member.first} ${member.last}`}
-                                className="view-photo"
+                                className="photo-view"
                             />
                             <div
-                                className="btn-primary change-photo"
+                                className="btn-primary photo-change__button"
                                 onClick={toggleUploader}
                             >
                                 <img
@@ -116,9 +116,9 @@ export default function viewMember({}) {
                                 />
                             )}
                         </div>
-                        <div className="bio-container">
+                        <section className="bio-container">
                             <div
-                                className="btn edit-member-btn icon-tree"
+                                className="btn bio-edit-member__button icon-tree"
                                 onClick={toggleEditBio}
                             >
                                 <img
@@ -136,45 +136,47 @@ export default function viewMember({}) {
                             <h1>
                                 {member.first} {member.last}
                             </h1>
-                            <div className="date-view">
+                            <div className="bio-date">
                                 {member.birth && (
                                     <DayJS
                                         format="DD MMM YYYY"
-                                        className="date-text"
+                                        className="bio-date__text"
                                     >
                                         {member.birth}
                                     </DayJS>
                                 )}
                                 {!member.birth && (
-                                    <p className="date-text">--/--/----</p>
+                                    <p className="bio-date__text">--/--/----</p>
                                 )}
 
-                                <p className="date-text">{"  -  "}</p>
+                                <p className="bio-date__text">{"  -  "}</p>
                                 {member.death && (
                                     <DayJS
                                         format="DD MMM YYYY"
-                                        className="date-text"
+                                        className="bio-date__text"
                                     >
                                         {member.death}
                                     </DayJS>
                                 )}
                                 {!member.death && (
-                                    <p className="date-text">--/--/----</p>
+                                    <p className="bio-date__text">--/--/----</p>
                                 )}
                             </div>
-                            <p className="bio-text">
+                            <p className="bio-date__text">
                                 City: {member.city || "--------"}
                             </p>
-                            <p className="bio-text">{member.bio}</p>
-                        </div>
-                        <div className="relatives-box">
+                            <p className="bio-date__text">{member.bio}</p>
+                        </section>
+                        <section className="bio-date__text">
                             <MemberRelatives
                                 id={member.id}
                                 addRelations={addRelativesToggler}
                             />
-                        </div>
+                        </section>
                     </div>
-                    <MemberWall id={id} />
+                    <section>
+                        <MemberWall id={id} />
+                    </section>
                 </div>
             )}
             {addRelativesIsVisible && (

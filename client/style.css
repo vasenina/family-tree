@@ -7,10 +7,10 @@
     --bordo-color: #7d4c6d;
     --blue-color: #55b6af;
     --light-blue-color: #b5e8e5;
-    --offset: 8px;
-    --offset-2: 16px;
-    --offset-3: 24px;
-    --offset-4: 32px;
+    --offset: 5px;
+    --offset-2: 10px;
+    --offset-3: 20px;
+    --offset-4: 30px;
     --offset-50: 50px;
 }
 
@@ -25,6 +25,7 @@
 body {
     background-color: ghostwhite;
 }
+
 /* ----loyaut---- */
 
 /* ----header---- */
@@ -34,7 +35,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    padding: 24px 8px;
+    padding: var(--offset-3) var(--offset);
     border-bottom: 1px solid var(--dark-color);
     position: sticky;
 }
@@ -245,7 +246,7 @@ body {
     grid-area: relatives;
     align-self: end;
 }
-.view-photo {
+.photo-view {
     position: absolute;
     top: 0;
     left: 0;
@@ -253,7 +254,7 @@ body {
     height: 500px;
 }
 
-.change-photo {
+.photo-change__button {
     width: 50px;
     height: 50px;
     z-index: 3;
@@ -262,7 +263,7 @@ body {
     left: 0;
 }
 
-.edit-member-btn {
+.bio-edit-member__button {
     width: 50px;
     position: absolute;
     top: var(--offset-2);
@@ -325,10 +326,10 @@ body {
     cursor: pointer;
 }
 
-.date-view {
+.bio-date {
     display: flex;
 }
-.date-text {
+.bio-date__text {
     display: inline;
     margin: var(--offset-2) 0;
     font-weight: 600;
@@ -395,21 +396,42 @@ body {
     /* grid-area: wall; */
 }
 
-.wall-memory-form {
+.wall-title {
+    margin-bottom: var(--offset-4);
+}
+
+.wall-add-memory-form {
     display: flex;
-    padding: var(--offset);
-    gap: var(--offset);
+}
+.wall-add-memory-form__button {
+    height: 100px;
+    width: 150px;
 }
 
-.wall-textarea {
-    width: 70%;
+.wall-add-memory-form__textarea {
+    width: 80%;
+    height: 100px;
+    resize: none;
+}
+.wall-memory-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--offset-50);
 }
 
-.memory-container {
-    width: 50%;
+.wall-memory-item {
+    max-width: 50%;
     display: flex;
     flex-direction: column;
-    padding: var(--offset-2);
+    padding: var(--offset-2) 0;
+}
+.wall-memory-item__text {
+}
+.wall-memory-item__member {
+    color: white;
+    text-decoration: none;
+    margin-top: var(--offset-2);
+    align-self: flex-end;
 }
 
 /* welcome-container" */

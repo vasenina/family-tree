@@ -25,6 +25,7 @@ export default function App() {
     return (
         <>
             <Header />
+
             <div className="main-body">
                 <BrowserRouter>
                     <Route exact path="/">

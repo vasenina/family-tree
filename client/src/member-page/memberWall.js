@@ -29,14 +29,16 @@ export default function MemberWall({ id }) {
                     {memories &&
                         memories.map((m) => {
                             return (
-                                <div className="memory-container" key={m._id}>
+                                <div className="wall-memory-item" key={m._id}>
+                                    <p className="wall-memory-item__text"></p>
                                     {m.memory_text}
-                                    <div>
-                                        <a href={`/member/${m.sender_id.id}`}>
-                                            {m.sender_id.last}{" "}
-                                            {m.sender_id.first}
-                                        </a>
-                                    </div>
+
+                                    <a
+                                        href={`/member/${m.sender_id.id}`}
+                                        className="wall-memory-item__member"
+                                    >
+                                        {m.sender_id.last} {m.sender_id.first}
+                                    </a>
                                 </div>
                             );
                         })}
@@ -79,18 +81,21 @@ export default function MemberWall({ id }) {
 
     return (
         <div className="wall-container">
-            <h2>Memories</h2>
-            {showWall()}
-            <form className="wall-memory-form">
+            <h2 className="wall-title">Memories</h2>
+            <div className="wall-memory-list">{showWall()}</div>
+            <form className="wall-add-memory-form">
                 <textarea
                     name="memory"
                     rows="4"
-                    className="wall-textarea"
+                    className="wall-add-memory-form__textarea"
                     maxLength="300"
                     onChange={handleChange}
                     ref={textAreValueRef}
                 />
-                <button onClick={addNewMemory} className="btn-primary">
+                <button
+                    onClick={addNewMemory}
+                    className="btn-primary wall-add-memory-form__button"
+                >
                     Add Memory
                 </button>
             </form>
